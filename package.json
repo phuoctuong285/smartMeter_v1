@@ -1,0 +1,23 @@
+{
+  "name": "onsenui-v2-react-navigation",
+  "version": "2.2.7+20170324.1",
+  "description": "",
+  "dependencies": {
+    "autobind-decorator": "^1.4.0",
+    "bootstrap-sass": "^3.3.7",
+    "onsenui": "2.2.x",
+    "react": "15.4.2",
+    "react-autobind": "^1.0.6",
+    "react-bootstrap": "^0.30.8",
+    "react-bootstrap-table": "^3.1.8",
+    "react-dom": "15.4.2",
+    "react-onsenui": "1.2.x",
+    "react-redux": "^5.0.4",
+    "redux": "^3.6.0",
+    "resolve-url-loader": "^2.0.2",
+    "sass-loader": "^6.0.3"
+  },
+  "devDependencies": {
+    "node-sass": "^4.5.2"
+  }
+}

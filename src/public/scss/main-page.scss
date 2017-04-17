@@ -1,0 +1,24 @@
+@import '~bootstrap-sass/assets/stylesheets/_bootstrap.scss';
+@import './login-page/_loginpage.scss';
+@import './detail-page/_detailpage.scss';
+@import './list/_list-page.scss';
+.separate {
+	margin:4px 0 4px 0
+}
+
+.left-space-right {
+	margin-left: 2px;
+	margin-right: 2px
+}
+.col-table {
+	text-align: center;
+	border-right: 1px solid #ccc;
+}
+.top-space-bottom {
+	margin-top: 5px;
+	margin-bottom: 5px
+}
+
+.padding-space {
+	padding:10px
+}
