@@ -7,18 +7,18 @@ import styleBootstrapTable from 'react-bootstrap-table/dist/react-bootstrap-tabl
 import SecondPage from './SecondPage.jsx'
 
 export default class App extends React.Component {
+  
   renderPage(route, navigator) {
-    // const props = route.props || {};
-    // props.navigator = navigator;
-    // props.route = route;
+    const props = route.props || {};
+    props.navigator = navigator;
+    props.route = route;
 
-    // return React.createElement(route.component, props);
-    <route.component navigator={navigator}/>
+    return React.createElement(route.component, props);
   }
 
   render() {
     return (
-      <Navigator initialRoute={{component: SecondPage}} renderPage={this.renderPage}/>
+      <Navigator initialRoute={{component: LoginPageContainer}} renderPage={this.renderPage}/>
     );
   }
 }

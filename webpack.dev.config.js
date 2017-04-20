@@ -69,7 +69,7 @@ module.exports = {
         cacheDirectory: true,
 
         plugins: [
-          path.join(cordovaNodeModules, 'react-hot-loader', 'babel')
+          path.join(cordovaNodeModules, 'react-hot-loader', 'babel'),
         ]
       }
     }, {

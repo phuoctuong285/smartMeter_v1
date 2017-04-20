@@ -1,16 +1,20 @@
 import Axios from 'axios'
 import {apiUrl} from '../app.config.js'
-import {loginSuccess,loginError} from '../actions/loginAction.js'
+import {requestLogin,loginSuccess,loginError} from '../actions/loginAction.js'
 
 export const Login = (user) => {
 	return (dispatch) => {
+		dispatch(requestLogin(true))
+		
 		return Axios.get(`${apiUrl}/api/Login`,{
-				id:user.id,
-				password:user.password
+				params: {
+					id:user.id,
+					password:user.password
+				}
 			})
 			.then((response) => {
-				console.log(response)
-				dispatch(loginSuccess(response))
+				console.log(response.data)
+				dispatch(loginSuccess(response.data))
 			})
 			.catch((error) => {
 				console.log(error)

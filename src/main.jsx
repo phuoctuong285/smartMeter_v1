@@ -18,7 +18,9 @@ let store = createStore(appReducer,applyMiddleware(thunk,logger))
 const rootElement = document.getElementById('app');
 ReactDOM.render(
   <AppContainer>
-    <App />
+    <Provider store={store}>
+      <App />
+    </Provider>
   </AppContainer>,
   rootElement
 );

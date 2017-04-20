@@ -1,6 +1,7 @@
 import React from 'react'
 import {Page,List,ListHeader,Toolbar,ListItem,BackButton,Row,Col,Button,Input,AlertDialog} from 'react-onsenui'
 import {notification} from 'onsenui'
+
 const renderToolbar = (title,navigator) => (
 	<Toolbar>
 		<div className='center'>{title}</div>
@@ -8,9 +9,23 @@ const renderToolbar = (title,navigator) => (
 )
 
 
-const LoginPage = ({route,username,password,handleUserNameChange,handlePasswordChange,handleLogin,handleHideAlert,isAlert,message,navigator}) => (
+const LoginPage = ({
+			route,
+			username,
+			password,
+			handleUserNameChange,
+			handlePasswordChange,
+			handleLogin,
+			handleHideAlert,
+			loginInform:{
+				error=false,
+				message='',
+				isLoading=false
+			},
+			navigator
+		}) => (
 	 <Page renderToolbar={renderToolbar.bind(this,'Login Page',navigator)}>
-	 	<AlertDialog isOpen={isAlert} isCancelable={false} >
+	 	<AlertDialog isOpen={error} isCancelable={false} >
 	 		<div className='alert-dialog-title'>
 	 			Warning!
 	 		</div>
@@ -31,7 +46,11 @@ const LoginPage = ({route,username,password,handleUserNameChange,handlePasswordC
 	       		<input type='password' className='text-input--underbar' placeholder='Password' value={password} onChange={handlePasswordChange}/>
 	       	</div>
        		<div className='login-form-button'>
-       			<button onClick={handleLogin} className='login-button'>Log In</button>
+       			<button onClick={handleLogin} className='login-button' disabled={isLoading}>
+       				{
+       					isLoading ? "Loading..." : "Log In"
+       				}
+       			</button>
        		</div>
        </div>
 	</Page>

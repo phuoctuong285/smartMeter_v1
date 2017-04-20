@@ -4,7 +4,8 @@ import LoginPage from './LoginPage.react.js'
 import ListPageContainer from '../list/ListPageContainer.react.js'
 import autoBind from 'react-autobind'
 import {connect} from 'react-redux'
-import {Login} from '../../api/loginApi.js'
+import * as LoginAction from '../../api/loginApi.js'
+import {requestLogin} from '../../actions/loginAction.js'
 
 class LoginPageContainer extends React.Component {
 	constructor(props) {
@@ -12,8 +13,6 @@ class LoginPageContainer extends React.Component {
 		this.state = {
 			username:'',
 			password:'',
-			message:'',
-			isAlert:false
 		}
 		autoBind(this)
 	}
@@ -32,23 +31,25 @@ class LoginPageContainer extends React.Component {
 
 	handleLogin() {
 		const {username,password} = this.state
-		// const {dispatch} = this.props
+		const {handleLogin} = this.props
 
-		// if(username !== 'admin' && password !== '1234') {
-		// 	Login({
-		// 		id:username,
-		// 		password:password
-		// 	})
-		// } else {
-		// 	this.props.navigator.pushPage({component:ListPageContainer});
-		// }
+		handleLogin({
+			id:username,
+			password:password
+		})
 	}
 
 	handleHideAlert() {
-		this.setState({
-			message:'',
-			isAlert:false
-		})
+		const {handleHideAlert} = this.props
+		handleHideAlert(false)
+	}
+
+	componentWillReceiveProps(nextProps) {
+		if(nextProps.loginInform) {
+			if(nextProps.loginInform.error == false) {
+				nextProps.loginOwnProps.navigator.pushPage({component:ListPageContainer})
+			}
+		}
 	}
 
 	render() {
@@ -62,7 +63,19 @@ class LoginPageContainer extends React.Component {
 		)
 	}
 }
-export default LoginPageContainer
-// export default connect(
-// 	state => ({loginInform:state.loginReducer})
-// )(LoginPageContainer)
+export default connect(
+	(state,ownProps) => {
+		return {
+			loginInform:state.loginReducer,
+			loginOwnProps:ownProps
+		}
+	},
+
+	dispatch => {
+		return {
+			handleLogin: user => dispatch(LoginAction.Login(user)),
+			handleHideAlert: isFlag => dispatch(requestLogin(isFlag))
+		}
+	}
+)(LoginPageContainer)
+

@@ -50,6 +50,9 @@ input[type=text], input[type=password] {
     &:active {
       background-color:#bdc3c7
     }
+    &:disabled {
+      cursor:no-drop
+    }
   }
 }
 
