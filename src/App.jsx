@@ -4,19 +4,21 @@ import {Navigator} from 'react-onsenui';
 import LoginPageContainer from './components/login/LoginPageContainer.react.js'
 import style from './public/scss/main-page.scss'
 import styleBootstrapTable from 'react-bootstrap-table/dist/react-bootstrap-table.min.css';
+import SecondPage from './SecondPage.jsx'
 
 export default class App extends React.Component {
   renderPage(route, navigator) {
-    const props = route.props || {};
-    props.navigator = navigator;
-    props.route = route;
+    // const props = route.props || {};
+    // props.navigator = navigator;
+    // props.route = route;
 
-    return React.createElement(route.component, props);
+    // return React.createElement(route.component, props);
+    <route.component navigator={navigator}/>
   }
 
   render() {
     return (
-      <Navigator initialRoute={{component: LoginPageContainer}} renderPage={this.renderPage} />
+      <Navigator initialRoute={{component: SecondPage}} renderPage={this.renderPage}/>
     );
   }
 }

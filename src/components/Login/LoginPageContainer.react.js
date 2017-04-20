@@ -3,6 +3,8 @@ import {Toolbar,Page,Button,BackButton,List,ListItem,ListHeader} from 'react-ons
 import LoginPage from './LoginPage.react.js'
 import ListPageContainer from '../list/ListPageContainer.react.js'
 import autoBind from 'react-autobind'
+import {connect} from 'react-redux'
+import {Login} from '../../api/loginApi.js'
 
 class LoginPageContainer extends React.Component {
 	constructor(props) {
@@ -30,14 +32,16 @@ class LoginPageContainer extends React.Component {
 
 	handleLogin() {
 		const {username,password} = this.state
-		if(username !== 'admin' && password !== '1234') {
-			this.setState({
-				message:'Invalid username or password',
-				isAlert:true
-			})
-		} else {
-			this.props.navigator.pushPage({component:ListPageContainer});
-		}
+		// const {dispatch} = this.props
+
+		// if(username !== 'admin' && password !== '1234') {
+		// 	Login({
+		// 		id:username,
+		// 		password:password
+		// 	})
+		// } else {
+		// 	this.props.navigator.pushPage({component:ListPageContainer});
+		// }
 	}
 
 	handleHideAlert() {
@@ -58,5 +62,7 @@ class LoginPageContainer extends React.Component {
 		)
 	}
 }
-
 export default LoginPageContainer
+// export default connect(
+// 	state => ({loginInform:state.loginReducer})
+// )(LoginPageContainer)

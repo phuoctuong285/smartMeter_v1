@@ -4,6 +4,7 @@
   "description": "",
   "dependencies": {
     "autobind-decorator": "^1.4.0",
+    "axios": "^0.16.1",
     "bootstrap-sass": "^3.3.7",
     "onsenui": "2.2.x",
     "react": "15.4.2",
@@ -13,7 +14,10 @@
     "react-dom": "15.4.2",
     "react-onsenui": "1.2.x",
     "react-redux": "^5.0.4",
+    "react-thunk": "^1.0.0",
     "redux": "^3.6.0",
+    "redux-logger": "^3.0.1",
+    "redux-thunk": "^2.2.0",
     "resolve-url-loader": "^2.0.2",
     "sass-loader": "^6.0.3"
   },

@@ -1,7 +1,8 @@
+import loginReducer from './login/loginReducer.js'
 import {combineReducers} from 'redux'
-import testReducer from './testReducer.js'
+
 const appReducer = combineReducers({
-	testReducer
+	loginReducer
 })
 
 export default appReducer
