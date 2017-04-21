@@ -11,7 +11,6 @@ const  renderToolbar = (navigator) => {
     return (
       <Toolbar>
         <div className="center">List Page</div>
-        <div className='right'><a className='padding-space' onClick={() => navigator.popPage({component:LoginPageContainer})}>Logout</a></div>
       </Toolbar>
     );
   }

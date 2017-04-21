@@ -47,7 +47,7 @@ class LoginPageContainer extends React.Component {
 	componentWillReceiveProps(nextProps) {
 		if(nextProps.loginInform) {
 			if(nextProps.loginInform.error == false) {
-				nextProps.loginOwnProps.navigator.pushPage({component:ListPageContainer})
+				nextProps.loginOwnProps.navigator.replacePage({component:ListPageContainer})
 			}
 		}
 	}
@@ -78,4 +78,3 @@ export default connect(
 		}
 	}
 )(LoginPageContainer)
-
