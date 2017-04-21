@@ -5,11 +5,13 @@ import autoBind from 'react-autobind'
 import {BootstrapTable,TableHeaderColumn} from 'react-bootstrap-table'
 import {Glyphicon,Button,DropdownButton} from 'react-bootstrap'
 import DetailPageContainer from '../detail/DetailPageContainer.react.js'
+import LoginPageContainer from '../login/LoginPageContainer.react.js'
 
-const  renderToolbar = () => {
+const  renderToolbar = (navigator) => {
     return (
       <Toolbar>
         <div className="center">List Page</div>
+        <div className='right'><a className='padding-space' onClick={() => navigator.popPage({component:LoginPageContainer})}>Logout</a></div>
       </Toolbar>
     );
   }
@@ -81,7 +83,7 @@ const  renderToolbar = () => {
   }
 
 const ListPage = ({navigator,listInform}=props) => {
-  return (<Page renderToolbar={renderToolbar}>
+  return (<Page renderToolbar={renderToolbar.bind(this,navigator)}>
     <RowButtons users={listInform.data} />
     <TableList data1={products} navigator={navigator}/>
     <div className='padding-space'>

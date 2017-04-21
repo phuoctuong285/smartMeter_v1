@@ -8,7 +8,7 @@ const renderToolbar = (navigator) => (
 	<Toolbar>
 		<div className='left'><BackButton onClick={() => navigator.popPage()}>戻る</BackButton></div>
 		<div className='center'>詳細</div>
-		<div className='right'><a className='padding-space' onClick={() => navigator.resetPage({component:LoginPageContainer})}>Logout</a></div>
+		<div className='right'><a className='padding-space' onClick={() => navigator.pushPage({component:LoginPageContainer})}>Logout</a></div>
 	</Toolbar>
 )
 
