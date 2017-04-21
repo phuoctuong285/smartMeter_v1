@@ -1,3 +1,9 @@
 node_modules
 *.log
-www/*
+/www/assets/
+/www/components/
+/www/css/
+/www/scss/
+/www/*.js
+/www/*.html
+/www/*.css
