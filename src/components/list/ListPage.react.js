@@ -1,6 +1,7 @@
 import React from 'react'
 import {Page,List,ListHeader,Toolbar,ListItem,BackButton,Row,Col,Input,AlertDialog,Select} from 'react-onsenui'
 import {notification} from 'onsenui'
+import autoBind from 'react-autobind'
 import {BootstrapTable,TableHeaderColumn} from 'react-bootstrap-table'
 import {Glyphicon,Button,DropdownButton} from 'react-bootstrap'
 import DetailPageContainer from '../detail/DetailPageContainer.react.js'
@@ -12,21 +13,21 @@ const  renderToolbar = () => {
       </Toolbar>
     );
   }
-  const RowButtons = () => {
+  const RowButtons = ({users=[]}) => {
     return (
       <Row>
         <input type='date' className='date-picker' />
         <select id='choose-sel-name' className='selector'>
-            <option value="basic"></option>
-            <option value="basic">Basic</option>
-            <option value="material">Material</option>
-            <option value="underbar">Underbar</option>
+          {
+            users.map(each =>  (<option key={each.staff_Code} value="basic">{each.staff_Name}</option>))
+          }
         </select>
         <select className='selector'>
-            <option value="basic"></option>
-            <option value="basic">Basic</option>
-            <option value="material">Material</option>
-            <option value="underbar">Underbar</option>
+            <option value="basic">全て</option>
+            <option value="basic">未着手</option>
+            <option value="material">PR配布</option>
+            <option value="underbar">作業開始</option>
+            <option value="underbar">作業完了</option>
         </select>
       </Row>
     )
@@ -70,21 +71,21 @@ const  renderToolbar = () => {
 
     return (
       <BootstrapTable data={data1} striped hover pagination>
-            <TableHeaderColumn isKey dataField='id' dataFormat={formatCellId} className='td-header'>Product ID</TableHeaderColumn>
-            <TableHeaderColumn dataField='location' dataFormat={formatCellLocation} className='td-header'> Product Name</TableHeaderColumn>
-            <TableHeaderColumn dataField='owner' className='td-header'>Product Price</TableHeaderColumn>
-            <TableHeaderColumn dataField='cityname'className='td-header'>Product Price</TableHeaderColumn>
-            <TableHeaderColumn dataField='button' dataFormat={formatCellAction} className='td-header'>Action</TableHeaderColumn>
+            <TableHeaderColumn isKey dataField='id' dataFormat={formatCellId} className='td-header'>お客様番号</TableHeaderColumn>
+            <TableHeaderColumn dataField='location' dataFormat={formatCellLocation} className='td-header'> 住所</TableHeaderColumn>
+            <TableHeaderColumn dataField='owner' className='td-header'>氏名</TableHeaderColumn>
+            <TableHeaderColumn dataField='cityname'className='td-header'>ステータス</TableHeaderColumn>
+            <TableHeaderColumn dataField='button' dataFormat={formatCellAction} className='td-header'>並べ替え</TableHeaderColumn>
       </BootstrapTable>
     )
   }
 
-const ListPage = ({navigator}=props) => (
-  <Page renderToolbar={renderToolbar}>
-    <RowButtons />
+const ListPage = ({navigator,listInform}=props) => {
+  return (<Page renderToolbar={renderToolbar}>
+    <RowButtons users={listInform.data} />
     <TableList data1={products} navigator={navigator}/>
     <div className='padding-space'>
-      <Button bsStyle="primary"> Search </Button>
+      <Button bsStyle="primary"> ルート表示 </Button>
     </div>
-  </Page>)
+  </Page>)}
 export default ListPage
