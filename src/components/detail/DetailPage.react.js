@@ -6,9 +6,9 @@ import LoginPageContainer from '../login/LoginPageContainer.react.js'
 
 const renderToolbar = (navigator) => (
 	<Toolbar>
-		<div className='left'><BackButton onClick={() => navigator.popPage()}>Back</BackButton></div>
-		<div className='center'>Detail Page</div>
-		<div className='right'><a className='padding-space' onClick={() => navigator.resetPage({component:LoginPageContainer})}>Logout</a></div>
+		<div className='left'><BackButton onClick={() => navigator.popPage()}>戻る</BackButton></div>
+		<div className='center'>詳細</div>
+		<div className='right'><a className='padding-space' onClick={() => navigator.replacePage({component:LoginPageContainer})}>Logout</a></div>
 	</Toolbar>
 )
 
@@ -28,14 +28,14 @@ const DetailPage = ({route,navigator}) => {
 			<div className='detail-page'>
 				<div className='detail-page-table'>
 					<BootstrapTable headerStyle={{backgroundColor:'#89C4F4'}} data={data} striped hover>
-						<TableHeaderColumn dataField='code' isKey={true}><Glyphicon glyph="glyphicon glyphicon-stop" />Column 1</TableHeaderColumn>
-						<TableHeaderColumn dataField='name'><Glyphicon glyph="glyphicon glyphicon-stop" />Column 2</TableHeaderColumn>
-						<TableHeaderColumn dataField='description'><Glyphicon glyph="glyphicon glyphicon-stop" />Column 3</TableHeaderColumn>
+						<TableHeaderColumn dataField='code' isKey={true}><Glyphicon glyph="glyphicon glyphicon-stop" />お客様番号 1</TableHeaderColumn>
+						<TableHeaderColumn dataField='name'><Glyphicon glyph="glyphicon glyphicon-stop" />住所</TableHeaderColumn>
+						<TableHeaderColumn dataField='description'><Glyphicon glyph="glyphicon glyphicon-stop" />氏名</TableHeaderColumn>
 					</BootstrapTable>
 				</div>
 				<div className='detail-page-description padding-space'>
 					<div className='detail-page-description-title'>
-						<Glyphicon glyph='glyphicon glyphicon-stop'/>Header Description
+						<Glyphicon glyph='glyphicon glyphicon-stop'/>機器情報
 					</div>
 					<div className='detail-page-description-textarea'>
 						<textarea style={{width:'100%',height:'100px'}} placeholder='Type here'/>
@@ -45,15 +45,15 @@ const DetailPage = ({route,navigator}) => {
 				 	<Row>
 				 		<Col width='50%'>
 							<div>
-								<Button bsStyle='success' className='align-right'>Primary</Button>
-								<Button bsStyle='default' className='align-right'>Primary</Button>
-								<Button bsStyle='default' className='align-right'>Primary</Button>
-								<Button bsStyle='default' className='align-right'>Primary</Button>
+								<Button bsStyle='success' className='align-right'>未着手</Button>
+								<Button bsStyle='default' className='align-right'>PR配布</Button>
+								<Button bsStyle='default' className='align-right'>作業開始</Button>
+								<Button bsStyle='default' className='align-right'>作業完了</Button>
 							</div>
 							<div className='top-space-bottom'/>
-							<div>
-								<Button bsStyle='info' 	className='align-right'>Primary</Button>
-								<Button bsStyle='info'	className='align-right'>Primary</Button>
+							<div>s
+								<Button bsStyle='info' 	className='align-right'>写真選択</Button>
+								<Button bsStyle='info'	className='align-right'>アップロード</Button>
 							</div>
 						</Col>
 						<Col width='50%' style={{textAlign:'center'}}>
@@ -62,10 +62,10 @@ const DetailPage = ({route,navigator}) => {
 					</Row>
 				</div>
 				<div className='detail-page-note padding-space'>
-					<textarea style={{width:'100%',height:'100px'}} placeholder='Type here'/>
+					<textarea style={{width:'100%',height:'100px'}} placeholder='特記事項があればここに記入'/>
 				</div>
 				<div className='detail-page-submit padding-space'>
-					<Button bsStyle='info' bsSize="large">Primary</Button>
+					<Button bsStyle='info' bsSize="large">更新</Button>
 				</div>
 			</div>
 		</Page>
