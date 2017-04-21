@@ -51,7 +51,7 @@ const DetailPage = ({route,navigator}) => {
 								<Button bsStyle='default' className='align-right'>作業完了</Button>
 							</div>
 							<div className='top-space-bottom'/>
-							<div>s
+							<div>
 								<Button bsStyle='info' 	className='align-right'>写真選択</Button>
 								<Button bsStyle='info'	className='align-right'>アップロード</Button>
 							</div>
