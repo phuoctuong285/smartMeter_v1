@@ -38,7 +38,7 @@ const LoginPage = ({
 	 	</AlertDialog>
        <div className='login-form'>
        		<div className='login-form-header'>
-       			<b>Login</b>
+       			<b>ログイン</b>
        		</div>
        		<div className='login-form-input'>
 	       		<input type='text' className='text-input--underbar' placeholder='Username' value={username} onChange={handleUserNameChange}/>
@@ -48,7 +48,7 @@ const LoginPage = ({
        		<div className='login-form-button'>
        			<button onClick={handleLogin} className='login-button' disabled={isLoading}>
        				{
-       					isLoading ? "Loading..." : "Log In"
+       					isLoading ? "Loading..." : "ログイン"
        				}
        			</button>
        		</div>

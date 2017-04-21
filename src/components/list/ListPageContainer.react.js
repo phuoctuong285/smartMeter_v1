@@ -3,18 +3,35 @@ import {Page,List,ListHeader,Toolbar,ListItem,BackButton,Row,Col,Button,Input,Al
 import {notification} from 'onsenui'
 import autoBind from 'react-autobind'
 import ListPage from './ListPage.react.js'
+import {connect} from 'react-redux'
+import ListAPI from '../../api/listPageApi.js'
 
 class ListPageContainer extends React.Component {
   constructor(props){
     super(props)
     autoBind(this)
   }
-
+  componentDidMount() {
+    this.props.LoadStaff()
+  }
   render() {
     return(
-     <ListPage  navigator={this.props.navigator}/>
+     <ListPage {...this.props}  navigator={this.props.navigator}/>
     )
   }
 }
 
-export default ListPageContainer
+export default connect(
+	(state,ownProps) => {
+		return {
+			listInform:state.listReducer,
+			listOwnProps:ownProps
+		}
+	},
+
+	dispatch => {
+    return {
+    LoadStaff: () => dispatch(ListAPI.getStaff())
+    }
+	}
+)(ListPageContainer)
