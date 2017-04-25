@@ -9,11 +9,10 @@ export default {
 
       return $.ajax({ type:'GET',
                       url:`${apiUrl}/api/Staffs`,
-                      dataType: "jsonp",
                       xhrFields: {
               					withCredentials: true
           						},
-                      crossDomain: false,
+                      crossDomain: true,
                       error:function(xhr,status,error) {
                         console.log(xhr)
                         dispatch(loadStaffError(error))
