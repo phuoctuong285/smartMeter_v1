@@ -1,24 +1,27 @@
-import Axios from 'axios'
 import {apiUrl} from '../app.config.js'
 import {requestStaff,loadStaffSuccess, loadStaffError} from '../actions/listAction.js'
-import cookie from 'react-cookie'
+import $ from 'jquery'
 
 export default {
   getStaff: () => {
     return (dispatch) => {
   		dispatch(requestStaff(true))
-
-  		return Axios.get(`${apiUrl}/api/Staffs`,{
-            withCredentials:true,
-        })
-  			.then((response) => {
-  				console.log(response.data)
-  				dispatch(loadStaffSuccess(response.data))
-  			})
-  			.catch((error) => {
-  				console.log(error)
-  				dispatch(loadStaffError(error))
-  			})
-  	}
+      return $.ajax({ type:'GET',
+                      url:`${apiUrl}/api/Staffs`,
+                      dataType: "jsonp",
+                      xhrFields: {
+              					withCredentials: true
+          						},
+                      crossDomain: false,
+                      error:function(xhr,status,error) {
+                        console.log(xhr)
+                        dispatch(loadStaffError(error))
+                      },
+                      success:function(data,status,xhr) {
+                        console.log(data)
+                        dispatch(loadStaffSuccess(data))
+                      }
+                    })
   }
+}
 }
