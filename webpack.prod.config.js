@@ -138,6 +138,9 @@ module.exports = {
     new webpack.NoErrorsPlugin(),
     new webpack.optimize.DedupePlugin(),
     new webpack.optimize.UglifyJsPlugin(),
+    new webpack.ProvidePlugin({
+      $:'jquery'
+    }),
     new CopyWebpackPlugin([{
       from: path.join(__dirname, 'src', 'public'),
       ignore: ['index.html.ejs']

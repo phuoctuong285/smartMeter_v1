@@ -108,6 +108,9 @@ module.exports = {
 
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
+    new wepback.ProvidePlugin({
+      $:'jquery'
+    }),
     new ExtractTextPlugin('[name].css'),
     new HtmlWebpackPlugin({
       template: 'src/public/index.html.ejs',
