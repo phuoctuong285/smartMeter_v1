@@ -1,10 +1,12 @@
 import loginReducer from './login/loginReducer.js'
-import listReducer from './listReducer.js'
+import reportsReducer from './reportsReducer.js'
+import listUserReducer from './listUserReducer.js'
 import {combineReducers} from 'redux'
 
 const appReducer = combineReducers({
 	loginReducer,
-	listReducer
+	listUserReducer,
+	reportsReducer
 })
 
 export default appReducer

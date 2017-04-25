@@ -20,3 +20,17 @@ export const loadStaffError = (error) => {
       data:error
   }
 }
+
+export const loadReports = (isLoading) => ({
+    type:appConstant.LOAD_REPORTS,
+    isLoading:isLoading
+})
+export const loadReportsSuccess = (data) => ({
+    type:appConstant.LOAD_REPORTS_SUCCESS,
+    data:data
+})
+
+export const loadReportsError = (error) => ({
+    type:appConstant.LOAD_REPORTS_ERROR,
+    data:error
+})
