@@ -1,5 +1,6 @@
 import {apiUrl} from '../app.config.js'
-import {requestStaff,loadStaffSuccess, loadStaffError} from '../actions/listAction.js'
+import {requestStaff,loadStaffSuccess, loadStaffError,loadReports,loadReportsSuccess,loadReportsError } from '../actions/listAction.js'
+import $ from 'jquery'
 
 export default {
   getStaff: () => {
@@ -7,11 +8,11 @@ export default {
   		dispatch(requestStaff(true))
       return $.ajax({ type:'GET',
                       url:`${apiUrl}/api/Staffs`,
-                      dataType: "jsonp",
                       xhrFields: {
               					withCredentials: true
           						},
-                      crossDomain: false,
+                      dataType: "json",
+                      crossDomain: true,
                       error:function(xhr,status,error) {
                         console.log(xhr)
                         dispatch(loadStaffError(error))
@@ -21,6 +22,33 @@ export default {
                         dispatch(loadStaffSuccess(data))
                       }
                     })
-  }
-}
-}
+                  }},
+
+      getListReports: (params) => {
+        return (dispatch) => {
+              dispatch(loadReports(true))
+               return $.ajax({ type:'GET',
+                              url:`${apiUrl}/api/Reports`,
+                              data:{
+                                filter:params.filter,
+                                staff:params.staff,
+                                targetDate:params.targetDate
+                              },
+                              xhrFields: {
+                      					withCredentials: true
+                  						},
+                              dataType: "json",
+                              crossDomain: true,
+                              error:function(xhr,status,error) {
+                                console.log(error)
+                                dispatch(loadReportsError(error))
+
+                              },
+                              success:function(data,status,xhr) {
+                                console.log(data)
+                                dispatch(loadReportsSuccess(data))
+                              }
+                            })
+
+        }
+          }}
