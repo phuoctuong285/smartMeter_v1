@@ -1,6 +1,5 @@
 import {apiUrl} from '../app.config.js'
 import {requestStaff,loadStaffSuccess, loadStaffError} from '../actions/listAction.js'
-import $ from 'jquery'
 
 export default {
   getStaff: () => {

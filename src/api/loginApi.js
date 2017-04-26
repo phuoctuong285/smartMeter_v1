@@ -1,6 +1,5 @@
 import {apiUrl} from '../app.config.js'
 import {requestLogin,loginSuccess,loginError} from '../actions/loginAction.js'
-import $ from 'jquery'
 
 export const Login = (user) => {
 	return (dispatch) => {
