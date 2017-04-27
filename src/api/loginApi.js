@@ -10,13 +10,11 @@ export const Login = (user) => {
         						withCredentials: true
     						},
 							crossDomain: true,
-							success:function(data, textStatus, request){
-									console.log(data.data)
+							success:function(data, textStatus, request){							
 									dispatch(loginSuccess(data.data))
 							},
 							error:function(error){
-										console.log(error)
-										dispatch(loginError(error))
+									dispatch(loginError(error))
 							}})
 	}
 }

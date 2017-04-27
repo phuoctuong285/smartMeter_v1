@@ -1,18 +1,22 @@
 import {apiUrl} from '../app.config.js'
-import {requestGetStatusHistory,getStatusHistorySuccess,getStatusHistoryError} from '../actions/statusHistoryApi.js'
+import {requestGetStatusHistory,getStatusHistorySuccess,getStatusHistoryError} from '../actions/statusHistoryAction.js'
 
-export const GetStatusHistory = (id) => {
+export const GetStatusHistory = (id,keyword='') => {
 	return (dispatch) => {
-		dispatch(requestGetStatusHistory())
+		dispatch(requestGetStatusHistory(true))
 		return $.ajax({
 			url:`${apiUrl}/api/StatusHistories/${id}`,
+			data:{
+				keyword:keyword
+			},
 			type:'GET',
+			xhrFields:{
+				withCredentials:true
+			},
 			success:(data) => {
-				console.log("Get Status History Success",data)
 				dispatch(getStatusHistorySuccess(data))
 			},
 			error:(error) => {
-				console.log(error)
 				dispatch(getStatusHistoryError(error))
 			}
 		})

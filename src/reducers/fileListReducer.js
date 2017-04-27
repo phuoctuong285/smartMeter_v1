@@ -1,6 +1,6 @@
-import appConstants from '../../constants/appConstants.js'
+import appConstants from '../constants/appConstant.js'
 
-const fileListReducer = (state={},action) => {
+const fileListReducer = (state={response:[]},action) => {
 	switch(action.type) {
 		case appConstants.REQUEST_GET_REPORT_DETAIL:
 			return {
@@ -10,7 +10,8 @@ const fileListReducer = (state={},action) => {
 			return {
 				isLoading:false,
 				error:false,
-				response:action.response
+				response:action.response,
+				method:'GET'
 			}
 		case appConstants.GET_REPORT_DETAIL_ERROR:
 			return {
@@ -22,3 +23,5 @@ const fileListReducer = (state={},action) => {
 			return state
 	}
 }
+
+export default fileListReducer

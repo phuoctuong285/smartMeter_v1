@@ -1,4 +1,4 @@
-import appConstant from '../../constants/appConstant.js'
+import appConstant from '../constants/appConstant.js'
 
 const loginReducer = (state={},action) => {
 	switch(action.type) {

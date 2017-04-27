@@ -1,6 +1,6 @@
-import appConstants from '../../constants/appConstants.js'
+import appConstants from '../constants/appConstant.js'
 
-const statusHistoryReducer = (state={},action) => {
+const statusHistoryReducer = (state={response:[]},action) => {
 	switch(action.type) {
 		case appConstants.REQUEST_GET_STATUS_HISTORY:
 			return {
@@ -10,7 +10,14 @@ const statusHistoryReducer = (state={},action) => {
 			return {
 				isLoading:false,
 				error:false,
-				response:action.response
+				response:action.response.reduce((accumulator,currentValue,currentIndex) => {
+					accumulator.push({
+						id:currentIndex,
+						...currentValue
+						})
+					return accumulator
+				},[]),
+				method:'GET'
 			}
 		case appConstants.GET_STATUS_HISTORY_ERROR:
 			return {

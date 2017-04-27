@@ -17,7 +17,7 @@ try {
 
 
 module.exports = {
-  devtool: 'eval-source-map',
+  devtool: 'inline-source-map',
   context: __dirname,
   debug: true,
   cache: true,
@@ -108,7 +108,7 @@ module.exports = {
 
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
-    new wepback.ProvidePlugin({
+    new webpack.ProvidePlugin({
       $:'jquery'
     }),
     new ExtractTextPlugin('[name].css'),

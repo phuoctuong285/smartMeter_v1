@@ -2,17 +2,19 @@ import {apiUrl} from '../app.config.js'
 import {requestGetFileList,getFileListSuccess,getFileListError} from '../actions/fileListAction.js'
 
 export const GetFileList = (id) => {
-	dispatch(requestGetFileList())
 	return (dispatch) => {
+		dispatch(requestGetFileList(true))
 		return $.ajax({
-			url:`${apiUrl}/api/FileList/${id}`,
+			url:`${apiUrl}/api/FileLists/${id}`,
 			type:'GET',
+			// xhrFields:{
+			// 	withCredentials:true
+			// },
+			crossDomain:true,
 			success:(data) => {
-				console.log("Get File List Success",data)
 				dispatch(getFileListSuccess(data))
 			},
 			error:(error) => {
-				console.log(error)
 				dispatch(getFileListError(error))
 			}
 		})

@@ -1,6 +1,6 @@
-import appConstants from '../constants/appConstants.js'
+import appConstants from '../constants/appConstant.js'
 
-export const requestGetStatusHistory = () => {
+export const requestGetStatusHistory = (isFlag) => {
 	return {
 		type:appConstants.REQUEST_GET_STATUS_HISTORY,
 		isLoading:isFlag

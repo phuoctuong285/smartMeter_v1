@@ -1,4 +1,4 @@
-import appConstants from '../constants/appConstants.js'
+import appConstants from '../constants/appConstant.js'
 
 export const requestGetFileList = (isFlag) => {
 	return {
