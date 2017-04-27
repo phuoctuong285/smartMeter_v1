@@ -8,7 +8,50 @@
  width: 30%;
  background-color: white;
 }
-
 .td-header{
-  background-color: #d0d3d8;
+  background-color: #2980b9;
+}
+.back-ground-page{
+  background-color: #FFF;
+}
+.tr-id{
+  width: 18%;
+}
+.tr-address{
+  width: 35%;
+}
+.tr-name{
+  width: 22%;
+}
+.tr-status-name{
+  width: 13%
+}
+.tr-button{
+  width: 12%
+}
+.react-bs-table table td, .react-bs-table table th {
+    white-space: initial;
+}
+.btn-custom-map{
+  padding: 0;
+  border: none;
+  background: none;
+   /* this was 1px earlier */
+ }
+ .blue-icon{
+   color: #3498db;
+ }
+.modal-page{
+  width: 50%;
+  height: 50%;
+  align-items: center;
+}
+.toolbar-color{
+  background-color: #34495e;
+  .text-color{
+    color: white;
+  }
+}
+.image-map{
+   border: 1px solid black;
 }

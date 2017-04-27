@@ -12,8 +12,10 @@ export const Login = (user) => {
     						},
 								crossDomain: true,
 								success:function(data, textStatus, request){
-										console.log(data.data)
-										dispatch(loginSuccess(data.data))
+										console.log(data[0])
+										window.localStorage.setItem('staff_Code',data[0].staff_Code)
+										window.localStorage.setItem('staff_Name',data[0].staff_Name)
+										dispatch(loginSuccess(data[0]))
 								},
 								error:function(error){
 											console.log(error)
