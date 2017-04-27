@@ -6,6 +6,7 @@ import {Glyphicon,Button,DropdownButton} from 'react-bootstrap'
 import DetailPageContainer from '../detail/DetailPageContainer.react.js'
 import LoginPageContainer from '../login/LoginPageContainer.react.js'
 import MapModal from '../mapModal.react.js'
+import MapElement from '../mapElement.react.js'
 import $ from 'jquery'
 
 const  renderToolbar = (navigator) => {
@@ -65,7 +66,7 @@ const  renderToolbar = (navigator) => {
   }
 
 const ListPage = ({currentAddress,showMapModal,toggleModal,isShowModal,changePosition,reports,dateValue,valueFilter,valueUsers,navigator,listUser,listReport,onChangeDate,onChangeFilter,onChangeUser}) => {
-
+  console.log('Location',location)
   return (<Page className='back-ground-page' renderToolbar={renderToolbar.bind(this,navigator)}>
     <RowButtons users={listUser.users}
                 dateValue={dateValue}
@@ -74,13 +75,13 @@ const ListPage = ({currentAddress,showMapModal,toggleModal,isShowModal,changePos
                 onChangeDate={onChangeDate}
                 onChangeFilter={onChangeFilter}
                 onChangeUser={onChangeUser}   />
-    {listUser.isLoading || listReport.isLoading ? <ProgressCircular indeterminate /> : <TableList data1={reports} showMapModal={showMapModal} changePosition={changePosition} navigator={navigator}/>}
+              {listUser.isLoading || listReport.isLoading ? <ProgressCircular className='center-block' indeterminate /> : <TableList data1={reports} showMapModal={showMapModal} changePosition={changePosition} navigator={navigator}/>}
      <div className='padding-space'>
-       <Button bsStyle="primary" > ルート表示 </Button>
+       <Button bsStyle="primary"> ルート表示 </Button>
      </div>
      <MapModal address={currentAddress} isOpen={isShowModal} toggleModal={toggleModal}/>
      <Row>
-       <img className='img-responsive center-block image-map' src={`https://maps.googleapis.com/maps/api/staticmap?zoom=16&size=600x300&maptype=roadmap&markers=color:red%7Clabel:C%7C48.858608,2.294471&key=AIzaSyA8rg6xtP_C6QlQAs3YFFRQ0vS63p9B794`} />
+       {reports.length > 0 ? <MapElement address={reports[0].address} /> : <div></div>}
      </Row>
 
   </Page>)}
