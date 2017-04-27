@@ -11,6 +11,9 @@ class mapElement extends React.Component {
       lng: 2.294471
     }
   }
+  componentDidMount(){
+    this.drawMap(this.props.address)
+  }
   changeLatLngState(lat,lng){
     this.setState({lat:lat,lng:lng})
   }
