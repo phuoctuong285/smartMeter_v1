@@ -5,6 +5,7 @@ import autoBind from 'react-autobind'
 import * as ReportDetailActions from '../../api/reportDetailApi.js'
 import * as StatusHistoryActions from '../../api/statusHistoryApi.js'
 import * as FileListActions from '../../api/fileListApi.js'
+import {notification} from 'onsenui'
 
 let id_tmp = '1111-012'
 
@@ -14,7 +15,10 @@ class DetailPageContainer extends React.Component {
 		autoBind(this)
 		this.state = {
 			isLoading:true,
-			noteValue:''
+			noteValue:'',
+			testStatus:0,
+			file:'',
+			imagePreviewUrl:''
 		}
 	}
 	componentDidMount() {
@@ -35,6 +39,15 @@ class DetailPageContainer extends React.Component {
 				isLoading:true
 			})
 		}
+	
+		if(nextProps.reportDetail.method === 'GET') {
+			this.setState((prevState,props) => {
+				return {
+					testStatus:nextProps.reportDetail.response[0].status_Id
+				}
+			})
+		}
+
 		if(nextProps.reportDetail.method === 'PUT') {
 			getReportDetail(id_tmp)
 			getStatusHistory(id_tmp)
@@ -52,8 +65,38 @@ class DetailPageContainer extends React.Component {
 	render() {
 		return (
 			<DetailPage {...this.props} {...this.state}
-						onChangeText={this.onChangeText}/>
+						onChangeText={this.onChangeText}
+						testChangeActiveButton={this.testChangeActiveButton}
+						handleImageChange={this.handleImageChange}
+						handleImageSubmit={this.handleImageSubmit}
+			/>
 		)
+	}
+
+	testChangeActiveButton(status) {
+		this.setState({
+			testStatus:status
+		})
+	}
+
+	handleImageChange(e) {
+		e.preventDefault()
+
+		let reader = new FileReader()
+		let file = e.target.files[0]
+
+		reader.onloadend = () => {
+			this.setState({
+				file:file,
+				imagePreviewUrl:reader.result
+			})
+		}
+
+		reader.readAsDataURL(file)
+	}
+
+	handleImageSubmit(e) {
+		notification.alert(`Upload Successfully ${this.state.file}`)
 	}
 }
 

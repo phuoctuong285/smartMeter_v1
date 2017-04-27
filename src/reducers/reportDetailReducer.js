@@ -11,7 +11,13 @@ const reportDetailReducer = (state={response:[]},action) => {
 			return {
 				isLoading:false,
 				error:false,
-				response:action.response,
+				response:action.response.reduce((accumulator,currentValue,currentIndex) => {
+					accumulator.push({
+						key:currentIndex,
+						...currentValue
+					})
+					return accumulator
+				},[]),
 				method:'GET'
 			}			
 		case appConstants.GET_REPORT_DETAIL_ERROR:

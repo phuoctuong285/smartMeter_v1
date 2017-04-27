@@ -7,9 +7,9 @@ export const GetFileList = (id) => {
 		return $.ajax({
 			url:`${apiUrl}/api/FileLists/${id}`,
 			type:'GET',
-			// xhrFields:{
-			// 	withCredentials:true
-			// },
+			xhrFields:{
+				withCredentials:true
+			},
 			crossDomain:true,
 			success:(data) => {
 				dispatch(getFileListSuccess(data))

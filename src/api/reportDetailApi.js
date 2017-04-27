@@ -24,37 +24,62 @@ export const GetReportDetail = (id) => {
 }
 
 export const PutReportDetail = (key,target,value) => {
-	let obj = {
-		Key:key,
-		Value:value,
-		Target:['1111-012'],
+	let param = {
+		"Key":"MEMO",
+		"Value":"123",
+		"Target":[]
 	}
-	console.log(JSON.stringify(obj))
+
+
 	return (dispatch) => {
 		dispatch(requestPutReportDetail(true))
 		return $.ajax({
-			url:`${apiUrl}/api/ReportDetails`,
+			url:`${apiUrl}/api/ReportDetails/`,
 			type:'PUT',
-			xxhrFields: {
-      			withCredentials: true
-   			},
-			crossDomain:true,
+			dataType:'json',
+			data:JSON.stringify(param),
+			contentType:'application/json',
+			xhrFields: {
+				withCredentials: true
+			},
+			crossDomain: true,
 			headers:{
-				'Content-Type':'application/json'
+				"Access-Control-Request-Method":"PUT",
+				"Access-Control-Request-Headers":"Content-Type"
 			},
-			contentType:'application/json; charset=utf-8',
-			data:JSON.stringify({
-				Key:"STATUS",
-				Value:"0",
-				Target:["1"]
-			}),
-			success:(data) => {
-				dispatch(putReportDetailSuccess(data))
+			error:function() {
+				console.log("Error")
 			},
-			error:(error) => {
-				dispatch(putReportDetailError(error))
+			complete:function(data) {
+				console.log("Data")
 			}
 		})
-
 	}
+
+
+// var param = {
+//     "Key":"MEMO",
+//     "Value": self.note.value,
+//     "Target": targets
+//     };
+//     $.ajax({
+//     url: "/api/ReportDetails/",
+//     type: 'PUT',
+//     dataType: 'json',
+//     data:JSON.stringify(param),
+//     contentType:'application/json',
+//     error: function () {
+//     $("#loading").fadeOut(1);
+//     $("#fade").fadeOut(1);
+//     },
+//     complete: function (data) {
+//     $.toast({text:'更新しました',showHideTransition : 'slide',hideAfter : 1000});
+//     rec = JSON.parse(data.responseText);
+//     self.search();
+//     self.tags.statuscontents.updateView();
+//     $("#loading").fadeOut(1);
+//     $("#fade").fadeOut(1);
+//     },
+//     });
+
 }

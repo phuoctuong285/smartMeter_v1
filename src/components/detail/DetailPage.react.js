@@ -1,10 +1,11 @@
 import React from 'react'
 import moment from 'moment'
 import {Page,List,ListHeader,Toolbar,ListItem,BackButton,Input,AlertDialog,Row,Col,ProgressCircular} from 'react-onsenui'
+import {notification} from 'onsenui'
 import {BootstrapTable,TableHeaderColumn} from 'react-bootstrap-table'
 import {Glyphicon,Button} from 'react-bootstrap'
 import LoginPageContainer from '../login/LoginPageContainer.react.js'
-
+import CustomCellEdit from '../element/CustomCellEdit.jsx'
 
 const renderToolbar = (navigator) => (
 	<Toolbar>
@@ -18,6 +19,10 @@ const dateFormatter = (cell,row) => {
 	return moment(cell).format('YYYY/MM/DD hh:mm:ss')
 }
 
+const createSaveButton = (onUpdate,props) => (
+	<CustomCellEdit onUpdate={onUpdate} {...props}/>
+)
+
 const DetailPage = ({
 	route,
 	navigator,
@@ -28,9 +33,14 @@ const DetailPage = ({
 	fileList={},
 	statusHistory={},
 	putReportDetail,
-	onChangeText
+	onChangeText,
+
+	testStatus,
+	testChangeActiveButton,
+	imagePreviewUrl,
+	handleImageChange,
+	handleImageSubmit
 	}) => {
-	console.log("Tuong",isLoading)
 	if(isLoading) {
 		return (
 			<div className='center'>
@@ -40,47 +50,64 @@ const DetailPage = ({
 	} else {
 		let status = reportDetail.response.length != 0 ? reportDetail.response[0].status_Id : 0
 		let info = reportDetail.response.length != 0 ? reportDetail.response[0].info : ''
+		let image = null
+	
+		if(!imagePreviewUrl.length) {
+			image = (<img alt="No Picture" width='200' height='300' src=''/>)
+		} else {
+			image = (<img src={imagePreviewUrl} width='200' height='300'/>)
+		}
+		
 		return (
 			<Page renderToolbar={renderToolbar.bind(this,navigator)}>
 					<div className='detail-page'>
-						<BootstrapTable headerStyle={{backgroundColor:'#89C4F4'}} data={reportDetail.response} striped hover>
-							<TableHeaderColumn dataField='id' isKey={true}><Glyphicon glyph="glyphicon glyphicon-stop" />お客様番号 1</TableHeaderColumn>
-							<TableHeaderColumn dataField='staff_Name'><Glyphicon glyph="glyphicon glyphicon-stop" />住所</TableHeaderColumn>
-							<TableHeaderColumn dataField='name'><Glyphicon glyph="glyphicon glyphicon-stop" />氏名</TableHeaderColumn>
+						<BootstrapTable headerStyle={{backgroundColor:'#89C4F4'}} data={reportDetail.response} striped hover cellEdit={{mode:'click'}}>
+							<TableHeaderColumn dataField='key' isKey={true} hidden={true}>Id</TableHeaderColumn>
+							<TableHeaderColumn dataField='id' customEditor={{getElement:createSaveButton}}><Glyphicon glyph="glyphicon glyphicon-stop" />お客様番号 1</TableHeaderColumn>
+							<TableHeaderColumn dataField='staff_Name' customEditor={{getElement:createSaveButton}}><Glyphicon glyph="glyphicon glyphicon-stop" />住所</TableHeaderColumn>
+							<TableHeaderColumn dataField='name' customEditor={{getElement:createSaveButton}}><Glyphicon glyph="glyphicon glyphicon-stop" />氏名</TableHeaderColumn>
 						</BootstrapTable>
-						<div className='detail-page-description padding-space'>
-							<div className='detail-page-description-title'>
-								<Glyphicon glyph='glyphicon glyphicon-stop'/>機器情報
-							</div>
-							<div className='detail-page-description-textarea'>
-								<textarea style={{width:'100%',height:'100px'}} placeholder='Type here' 
-									value={info}/>
-							</div>
-						</div>
+
+						<BootstrapTable headerStyle={{backgroundColor:'#89C4F4'}} data={reportDetail.response} striped hover cellEdit={{mode:'click'}}>
+							<TableHeaderColumn dataField='key' isKey={true} hidden={true}>Id</TableHeaderColumn>
+							<TableHeaderColumn dataField='info' customEditor={{getElement:createSaveButton}}><Glyphicon glyph="glyphicon glyphicon-stop" />お客様番号 1</TableHeaderColumn>
+						</BootstrapTable>
+						{
+							// <div className='detail-page-description padding-space'>
+							// 	<div className='detail-page-description-title'>
+							// 		<Glyphicon glyph='glyphicon glyphicon-stop'/>機器情報
+							// 	</div>
+							// 	<div className='detail-page-description-textarea'>
+							// 		<textarea style={{width:'100%',height:'100px'}} placeholder='Type here' 
+							// 			value={info}/>
+							// 	</div>
+							// </div>
+						}
 						<div className='detail-page-upload padding-space'>
 						 	<Row>
 						 		<Col width='50%'>
 									<div>
-										<Button bsStyle={status == 0 ? 'success' : 'default'} className='align-right' onClick={() => putReportDetail('STATUS',id,'0')}>未着手</Button>
-										<Button bsStyle={status == 1 ? 'success' : 'default'} className='align-right' onClick={() => putReportDetail('STATUS',id,'1')}>PR配布</Button>
-										<Button bsStyle={status == 2 ? 'success' : 'default'} className='align-right' onClick={() => putReportDetail('STATUS',id,'2')}>作業開始</Button>
-										<Button bsStyle={status == 3 ? 'success' : 'default'} className='align-right' onClick={() => putReportDetail('STATUS',id,'3')}>作業完了</Button>
+										<Button bsStyle={testStatus == 0 ? 'success' : 'default'} className='align-right' onClick={() => testChangeActiveButton(0)}>未着手</Button>
+										<Button bsStyle={testStatus == 1 ? 'success' : 'default'} className='align-right' onClick={() => testChangeActiveButton(1)}>PR配布</Button>
+										<Button bsStyle={testStatus == 2 ? 'success' : 'default'} className='align-right' onClick={() => testChangeActiveButton(2)}>作業開始</Button>
+										<Button bsStyle={testStatus == 3 ? 'success' : 'default'} className='align-right' onClick={() => testChangeActiveButton(3)}>作業完了</Button>
 									</div>
 									<div className='top-space-bottom'/>
 									<div>
-										<Button bsStyle='info' 	className='align-right'>写真選択</Button>
-										<Button bsStyle='info'	className='align-right'>アップロード</Button>
+										<input id='file' hidden={true} type='file' onChange={(e) => handleImageChange(e)} style={{display:"none"}}/>
+										<Button bsStyle='info' className='align-right' onClick={() => $("#file").trigger('click')}>写真選択</Button>
+										<Button bsStyle='info'className='align-right' onClick={() => handleImageSubmit()}>アップロード</Button>
 									</div>
 								</Col>
 								<Col width='50%' style={{textAlign:'center'}}>
-									<img alt='No Picture' width='200' height='300'/>
+									{image}
 								</Col>
 							</Row>
 						</div>
 						<div className='detail-page-note padding-space'>
 							<textarea style={{width:'100%',height:'100px'}} placeholder='特記事項があればここに記入' onChange={onChangeText.bind(this,'note')}/>	
 							<div className='detail-page-submit'>
-								<Button bsStyle='info' bsSize="large" onClick={() => putReportDetail('MEMO',id,noteValue)}>更新</Button>	
+								<Button bsStyle='info' bsSize="large" onClick={() => notification.alert("Upload Successfully")}>更新</Button>	
 							</div>
 						</div>
 						
@@ -93,7 +120,7 @@ const DetailPage = ({
 								<TableHeaderColumn row='1' dataField='status_Name'>ステータス</TableHeaderColumn>		
 							</BootstrapTable>
 							<div className='detail-page-submit'>
-								<Button bsStyle='info' bsSize="large">出力</Button>
+								<Button bsStyle='info' bsSize="large" onClick={() => notification.alert("Not Available")}>出力</Button>
 							</div>
 						</div>
 					</div>
