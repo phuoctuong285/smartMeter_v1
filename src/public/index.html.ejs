@@ -8,6 +8,7 @@
 
   <!-- The following EJS lines include the necessary CSS and JS
   from Monaca (cordova.js/ loader.js) in production mode -->
+
 <% for (var dep in htmlWebpackPlugin.options.externalJS) { %>
   <script type="text/javascript" src="<%= htmlWebpackPlugin.options.externalJS[dep] %>"></script><% } %>
 <% for (var dep in htmlWebpackPlugin.options.externalCSS) { %>
@@ -15,5 +16,7 @@
 </head>
 <body>
   <div id="app"></div>
+  <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBoVPuQJNwD3s4KBxENkQHTv8BYUy9Z0W4"
+  type="text/javascript"></script>
 </body>
 </html>

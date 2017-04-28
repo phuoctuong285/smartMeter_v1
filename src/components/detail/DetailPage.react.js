@@ -8,10 +8,10 @@ import LoginPageContainer from '../login/LoginPageContainer.react.js'
 import CustomCellEdit from '../element/CustomCellEdit.jsx'
 
 const renderToolbar = (navigator) => (
-	<Toolbar>
-		<div className='left'><BackButton onClick={() => navigator.popPage()}>戻る</BackButton></div>
-		<div className='center'>詳細</div>
-		<div className='right'><a className='padding-space' onClick={() => navigator.replacePage({component:LoginPageContainer})}>Logout</a></div>
+	<Toolbar className='toolbar-color'>
+		<div className='left'><BackButton onClick={() => navigator.popPage()}><span className='text-color'>戻る</span></BackButton></div>
+		<div className='text-color center'>詳細</div>
+		<div className='right'><a className='padding-space' onClick={() => navigator.replacePage({component:LoginPageContainer})}><span className='text-color'>Logout</span></a></div>
 	</Toolbar>
 )
 
@@ -53,22 +53,22 @@ const DetailPage = ({
 		let image = null
 	
 		if(!imagePreviewUrl.length) {
-			image = (<img alt="No Picture" width='200' height='300' src=''/>)
+			image = (<img alt="写真がありません" src='' className='prev-image'/>)
 		} else {
-			image = (<img src={imagePreviewUrl} width='200' height='300'/>)
+			image = (<img src={imagePreviewUrl} className='prev-image'/>)
 		}
 		
 		return (
-			<Page renderToolbar={renderToolbar.bind(this,navigator)}>
+			<Page className='margin-navigator' renderToolbar={renderToolbar.bind(this,navigator)}>
 					<div className='detail-page'>
-						<BootstrapTable headerStyle={{backgroundColor:'#89C4F4'}} data={reportDetail.response} striped hover cellEdit={{mode:'click'}}>
+						<BootstrapTable tableHeaderClass='default-header-color' data={reportDetail.response} striped hover cellEdit={{mode:'click'}}>
 							<TableHeaderColumn dataField='key' isKey={true} hidden={true}>Id</TableHeaderColumn>
 							<TableHeaderColumn dataField='id' customEditor={{getElement:createSaveButton}}><Glyphicon glyph="glyphicon glyphicon-stop" />お客様番号 1</TableHeaderColumn>
 							<TableHeaderColumn dataField='staff_Name' customEditor={{getElement:createSaveButton}}><Glyphicon glyph="glyphicon glyphicon-stop" />住所</TableHeaderColumn>
 							<TableHeaderColumn dataField='name' customEditor={{getElement:createSaveButton}}><Glyphicon glyph="glyphicon glyphicon-stop" />氏名</TableHeaderColumn>
 						</BootstrapTable>
 
-						<BootstrapTable headerStyle={{backgroundColor:'#89C4F4'}} data={reportDetail.response} striped hover cellEdit={{mode:'click'}}>
+						<BootstrapTable tableHeaderClass='default-header-color' data={reportDetail.response} striped hover cellEdit={{mode:'click'}}>
 							<TableHeaderColumn dataField='key' isKey={true} hidden={true}>Id</TableHeaderColumn>
 							<TableHeaderColumn dataField='info' customEditor={{getElement:createSaveButton}}><Glyphicon glyph="glyphicon glyphicon-stop" />お客様番号 1</TableHeaderColumn>
 						</BootstrapTable>
@@ -107,12 +107,12 @@ const DetailPage = ({
 						<div className='detail-page-note padding-space'>
 							<textarea style={{width:'100%',height:'100px'}} placeholder='特記事項があればここに記入' onChange={onChangeText.bind(this,'note')}/>	
 							<div className='detail-page-submit'>
-								<Button bsStyle='info' bsSize="large" onClick={() => notification.alert("Upload Successfully")}>更新</Button>	
+								<Button bsStyle='primary' bsSize="large" onClick={() => notification.alert("Upload Successfully")}>更新</Button>	
 							</div>
 						</div>
 						
 						<div className='detail-page-history padding-space'>
-							<BootstrapTable headerStyle={{backgroundColor:'#89C4F4'}} data={statusHistory.response} striped hover>
+							<BootstrapTable tableHeaderClass='default-header-color' data={statusHistory.response} striped hover>
 								<TableHeaderColumn row='0' colSpan='3'><Glyphicon glyph="glyphicon glyphicon-stop" />ステータス更新職歴</TableHeaderColumn>
 								<TableHeaderColumn dataField='id' isKey={true} hidden={true}>Id</TableHeaderColumn>
 								<TableHeaderColumn row='1' dataField='update_Date' dataFormat={dateFormatter}>更新日時</TableHeaderColumn>
@@ -120,7 +120,7 @@ const DetailPage = ({
 								<TableHeaderColumn row='1' dataField='status_Name'>ステータス</TableHeaderColumn>		
 							</BootstrapTable>
 							<div className='detail-page-submit'>
-								<Button bsStyle='info' bsSize="large" onClick={() => notification.alert("Not Available")}>出力</Button>
+								<Button bsStyle='primary' bsSize="large" onClick={() => notification.alert("Not Available")}>出力</Button>
 							</div>
 						</div>
 					</div>

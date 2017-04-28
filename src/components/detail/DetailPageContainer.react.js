@@ -22,10 +22,10 @@ class DetailPageContainer extends React.Component {
 		}
 	}
 	componentDidMount() {
-		const {getReportDetail,getFileList,getStatusHistory} = this.props
-		getReportDetail(id_tmp)
-		getFileList(id_tmp)
-		getStatusHistory(id_tmp)
+		const {getReportDetail,getFileList,getStatusHistory,route} = this.props
+		getReportDetail(route.id)
+		getFileList(route.id)
+		getStatusHistory(route.id)
 	}
 	
 	componentWillReceiveProps(nextProps) {
@@ -49,8 +49,8 @@ class DetailPageContainer extends React.Component {
 		}
 
 		if(nextProps.reportDetail.method === 'PUT') {
-			getReportDetail(id_tmp)
-			getStatusHistory(id_tmp)
+			getReportDetail(nextProps.ownProps.route.id)
+			getStatusHistory(nextProps.ownProps.route.id)
 		}
 	}
 
@@ -101,18 +101,19 @@ class DetailPageContainer extends React.Component {
 }
 
 export default connect(
-	state => {
+	(state,ownProps) => {
 		return {
 			reportDetail:state.reportDetailReducer,
 			fileList:state.fileListReducer,
-			statusHistory:state.statusHistoryReducer
+			statusHistory:state.statusHistoryReducer,
+			ownProps:ownProps
 		}
 	},
 	dispatch => {
 		return {
-			getReportDetail:(id) => dispatch(ReportDetailActions.GetReportDetail(id_tmp)),
-			getFileList:(id) => dispatch(FileListActions.GetFileList(id_tmp)),
-			getStatusHistory:(id) => dispatch(StatusHistoryActions.GetStatusHistory(id_tmp)),
+			getReportDetail:(id) => dispatch(ReportDetailActions.GetReportDetail(id)),
+			getFileList:(id) => dispatch(FileListActions.GetFileList(id)),
+			getStatusHistory:(id) => dispatch(StatusHistoryActions.GetStatusHistory(id)),
 			putReportDetail:(key,target,value) => dispatch(ReportDetailActions.PutReportDetail(key,target,value))
 		}
 	}

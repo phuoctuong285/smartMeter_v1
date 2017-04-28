@@ -10,11 +10,15 @@ export const Login = (user) => {
         						withCredentials: true
     						},
 							crossDomain: true,
-							success:function(data, textStatus, request){							
-									dispatch(loginSuccess(data.data))
+							success:function(data, textStatus, request){
+									console.log(data[0])
+									window.localStorage.setItem('staff_Code',data[0].staff_Code)
+									window.localStorage.setItem('staff_Name',data[0].staff_Name)
+									dispatch(loginSuccess(data[0]))
 							},
 							error:function(error){
-									dispatch(loginError(error))
+										console.log(error)
+										dispatch(loginError(error))
 							}})
 	}
 }

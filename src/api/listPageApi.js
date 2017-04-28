@@ -14,11 +14,9 @@ export default {
                       dataType: "json",
                       crossDomain: true,
                       error:function(xhr,status,error) {
-                        console.log(xhr)
                         dispatch(loadStaffError(error))
                       },
                       success:function(data,status,xhr) {
-                        console.log(data)
                         dispatch(loadStaffSuccess(data))
                       }
                     })
