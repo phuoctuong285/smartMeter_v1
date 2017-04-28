@@ -31,12 +31,17 @@ class ListPageContainer extends React.Component {
                           targetDate:this.changeDateFormat(this.state.dateValue)})
   }
 
-  onChangeDate(event) {
-    console.log('LoadChangeDate')
-      this.props.LoadReport({filter:this.state.valueFilter,
+  onChangeDate(value) {
+    this.props.LoadReport({filter:this.state.valueFilter,
                             staff:this.state.valueUsers,
-                            targetDate:this.changeDateFormat(event.target.value)})
-      this.setState({dateValue:Moment(event.target.value).format('YYYY-MM-DD')})
+                            targetDate:this.changeDateFormat(Moment(value).format('YYYY-MM-DD'))})
+    this.setState({
+      dateValue:Moment(value).format('YYYY-MM-DD')
+    })
+      // this.props.LoadReport({filter:this.state.valueFilter,
+      //                       staff:this.state.valueUsers,
+      //                       targetDate:this.changeDateFormat(event.target.value)})
+      // this.setState({dateValue:Moment(event.target.value).format('YYYY-MM-DD')})
   }
 
   onChangeUser(event) {

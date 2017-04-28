@@ -11,7 +11,7 @@ const renderToolbar = (navigator) => (
 	<Toolbar className='toolbar-color'>
 		<div className='left'><BackButton onClick={() => navigator.popPage()}><span className='text-color'>戻る</span></BackButton></div>
 		<div className='text-color center'>詳細</div>
-		<div className='right'><a className='padding-space' onClick={() => navigator.replacePage({component:LoginPageContainer})}><span className='text-color'>Logout</span></a></div>
+		<div className='right'><a className='padding-space' onClick={() => navigator.replacePage({component:LoginPageContainer})}><span className='text-color'>ログアウト</span></a></div>
 	</Toolbar>
 )
 
@@ -39,8 +39,12 @@ const DetailPage = ({
 	testChangeActiveButton,
 	imagePreviewUrl,
 	handleImageChange,
-	handleImageSubmit
+	handleImageSubmit,
+
+	testStatusHistory={},
+	handleSubmit
 	}) => {
+	
 	if(isLoading) {
 		return (
 			<div className='center'>
@@ -94,8 +98,10 @@ const DetailPage = ({
 									</div>
 									<div className='top-space-bottom'/>
 									<div>
-										<input id='file' hidden={true} type='file' onChange={(e) => handleImageChange(e)} style={{display:"none"}}/>
-										<Button bsStyle='info' className='align-right' onClick={() => $("#file").trigger('click')}>写真選択</Button>
+										<div className='magic-upload-wrapper align-right'>
+											<input id='file' type='file' onChange={(e) => handleImageChange(e)} className='magic-upload'/>
+											<Button bsStyle='info'>写真選択</Button>
+										</div>
 										<Button bsStyle='info'className='align-right' onClick={() => handleImageSubmit()}>アップロード</Button>
 									</div>
 								</Col>
@@ -107,12 +113,12 @@ const DetailPage = ({
 						<div className='detail-page-note padding-space'>
 							<textarea style={{width:'100%',height:'100px'}} placeholder='特記事項があればここに記入' onChange={onChangeText.bind(this,'note')}/>	
 							<div className='detail-page-submit'>
-								<Button bsStyle='primary' bsSize="large" onClick={() => notification.alert("Upload Successfully")}>更新</Button>	
+								<Button bsStyle='primary' bsSize="large" onClick={(e) => handleSubmit(e)}>更新</Button>	
 							</div>
 						</div>
 						
 						<div className='detail-page-history padding-space'>
-							<BootstrapTable tableHeaderClass='default-header-color' data={statusHistory.response} striped hover>
+							<BootstrapTable tableHeaderClass='default-header-color' data={testStatusHistory.response} striped hover>
 								<TableHeaderColumn row='0' colSpan='3'><Glyphicon glyph="glyphicon glyphicon-stop" />ステータス更新職歴</TableHeaderColumn>
 								<TableHeaderColumn dataField='id' isKey={true} hidden={true}>Id</TableHeaderColumn>
 								<TableHeaderColumn row='1' dataField='update_Date' dataFormat={dateFormatter}>更新日時</TableHeaderColumn>
