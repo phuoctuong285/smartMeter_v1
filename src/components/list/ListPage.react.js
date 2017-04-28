@@ -37,7 +37,7 @@ const  renderToolbar = (navigator) => {
   }
   const TableList = ({changePosition,data1,navigator,showMapModal}) => {
     const  formatCellId = (cell,row) => {
-      return (<a onClick={() => {navigator.pushPage({component:DetailPageContainer})}}>{cell}</a>)
+      return (<a onClick={() => {navigator.pushPage({component:DetailPageContainer,id:row.id})}}>{cell}</a>)
     }
     const formatCellLocation = (cell,row) => {
       return (<div> <Button className='btn-custom-map' onClick={()=>showMapModal(row.address)}>
@@ -55,7 +55,7 @@ const  renderToolbar = (navigator) => {
     }
 
     return (
-      <BootstrapTable data={data1} tableHeaderClass='td-header'  striped hover pagination>
+      <BootstrapTable data={data1} tableHeaderClass='td-header' striped hover pagination>
             <TableHeaderColumn isKey dataField='id' columnClassName='tr-id' dataFormat={formatCellId} >お客様番号</TableHeaderColumn>
             <TableHeaderColumn dataField='address' columnClassName='tr-address' dataFormat={formatCellLocation}> 住所</TableHeaderColumn>
             <TableHeaderColumn dataField='name' columnClassName='tr-name' >氏名</TableHeaderColumn>
@@ -66,7 +66,6 @@ const  renderToolbar = (navigator) => {
   }
 
 const ListPage = ({currentAddress,showMapModal,toggleModal,isShowModal,changePosition,reports,dateValue,valueFilter,valueUsers,navigator,listUser,listReport,onChangeDate,onChangeFilter,onChangeUser}) => {
-  console.log('Location',location)
   return (<Page className='back-ground-page' renderToolbar={renderToolbar.bind(this,navigator)}>
     <RowButtons users={listUser.users}
                 dateValue={dateValue}
@@ -83,6 +82,5 @@ const ListPage = ({currentAddress,showMapModal,toggleModal,isShowModal,changePos
      <Row>
        {reports.length > 0 ? <MapElement address={reports[0].address} /> : <div></div>}
      </Row>
-
   </Page>)}
 export default ListPage

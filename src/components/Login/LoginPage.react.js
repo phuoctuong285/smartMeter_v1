@@ -3,8 +3,8 @@ import {Page,List,ListHeader,Toolbar,ListItem,BackButton,Row,Col,Button,Input,Al
 import {notification} from 'onsenui'
 
 const renderToolbar = (title,navigator) => (
-	<Toolbar>
-		<div className='center'>{title}</div>
+	<Toolbar className='toolbar-color'>
+		<div className='text-color center'>{title}</div>
 	</Toolbar>
 )
 
@@ -24,7 +24,7 @@ const LoginPage = ({
 			},
 			navigator
 		}) => (
-	 <Page renderToolbar={renderToolbar.bind(this,'Login Page',navigator)}>
+	 <Page className='margin-navigator' renderToolbar={renderToolbar.bind(this,'Login Page',navigator)}>
 	 	<AlertDialog isOpen={error} isCancelable={false} >
 	 		<div className='alert-dialog-title'>
 	 			Warning!
