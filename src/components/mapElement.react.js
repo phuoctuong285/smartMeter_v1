@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import {Page,List,ListHeader,Toolbar,ListItem,BackButton,Row,Col,Button,Input,AlertDialog} from 'react-onsenui'
+import {notification} from 'onsenui'
 import {Glyphicon,Modal} from 'react-bootstrap'
 
 class mapElement extends React.Component {
@@ -26,11 +27,9 @@ class mapElement extends React.Component {
           },
            (results, status) => {
             if (status == google.maps.GeocoderStatus.OK) {
-            // this.setState({lat:results[0].geometry.location.lat(),
-            //                 lng:results[0].geometry.location.lng()})
             this.changeLatLngState(results[0].geometry.location.lat(),results[0].geometry.location.lng())
             } else {
-              alert("位置情報が取得できませんでした。")
+              notification.alert({message:"位置情報が取得できませんでした。"})
             }
           }
         )
