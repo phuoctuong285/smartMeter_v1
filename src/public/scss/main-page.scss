@@ -1,9 +1,8 @@
+
 @import '~bootstrap-sass/assets/stylesheets/_bootstrap.scss';
+@import '~react-datepicker/dist/react-datepicker.css';
+@import './_base.scss';
 @import './login-page/_loginpage.scss';
 @import './detail-page/_detailpage.scss';
 @import './list/_list-page.scss';
 @import './global.scss';
-
-.margin-navigator {
-	margin-top: 15px
-}

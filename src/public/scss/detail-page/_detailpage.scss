@@ -24,6 +24,26 @@
 			box-shadow: 0 0 2px 1px rgba(0, 140, 186, 0.5);
 		}
 	}
+	.magic-upload{
+		display: block;
+		opacity: 0;
+		position: absolute;
+		left:0;
+		width:82px;
+		height:33px;
+		top:0;
+		&-wrapper{
+			position: relative;
+			display: inline-block;
+			&:hover{
+				.btn-info{
+				    color: #fff;
+				    background-color: #31b0d5;
+				    border-color: #269abc;
+				}
+			}
+		}
+	}
 }
 
 

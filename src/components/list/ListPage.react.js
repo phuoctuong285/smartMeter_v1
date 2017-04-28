@@ -3,12 +3,14 @@ import {Page,List,ListHeader,Toolbar,ListItem,BackButton,Row,Col,Input,AlertDial
 import {notification,modal} from 'onsenui'
 import {BootstrapTable,TableHeaderColumn} from 'react-bootstrap-table'
 import {Glyphicon,Button,DropdownButton} from 'react-bootstrap'
-import DetailPageContainer from '../detail/DetailPageContainer.react.js'
+import $ from 'jquery'
+import DetailPageContainer from '../detail/DetailPageContainer.jsx'
 import LoginPageContainer from '../login/LoginPageContainer.react.js'
 import MapModal from '../mapModal.react.js'
 import MapElement from '../mapElement.react.js'
-import $ from 'jquery'
-
+import CustomDatePicker from '../element/CustomDatePicker.jsx'
+import DatePicker from 'react-datepicker'
+import moment from 'moment'
 const  renderToolbar = (navigator) => {
     return (
       <Toolbar className='toolbar-color'>
@@ -19,7 +21,12 @@ const  renderToolbar = (navigator) => {
   const RowButtons = ({users=[],dateValue,valueFilter,valueUsers,timeSearch,onChangeDate,onChangeFilter,onChangeUser}) => {
     return (
       <Row>
-        <input type='date' value={dateValue} onChange={onChangeDate} className='date-picker' />
+        <DatePicker 
+          selected={moment(dateValue,'YYYY-MM-DD')}
+          onChange={onChangeDate}
+          dateFormat='YYYY-MM-DD'
+          className='custom-date-picker'
+        />
         <select id='choose-sel-name' value={valueUsers} onChange={onChangeUser} className='selector'>
           {
             users.map(each =>  (<option key={each.staff_Code} value={each.staff_Name}>{each.staff_Name}</option>))
@@ -45,7 +52,7 @@ const  renderToolbar = (navigator) => {
     }
     const formatCellAction = (cell,row, enumObject, index) => {
 
-      return (<Row>
+    return (<Row>
         <Button className='align-right'onClick={()=>{changePosition(index,index - 1)}}>
           <Glyphicon glyph="glyphicon glyphicon-arrow-up" /></Button>
         <Button className='mdm' onClick={()=>{changePosition(index,index + 1)}}>
@@ -54,8 +61,18 @@ const  renderToolbar = (navigator) => {
       </Row>)
     }
 
+    const renderShowsTotal = (start,to,total) => {
+      return (
+          <span className='align-right'>表示件数変更</span>
+      )
+    }
+
+    const options = {
+      paginationShowsTotal:renderShowsTotal
+    }
+
     return (
-      <BootstrapTable data={data1} tableHeaderClass='td-header' striped hover pagination>
+      <BootstrapTable data={data1} tableHeaderClass='td-header' striped hover pagination options={options}>
             <TableHeaderColumn isKey dataField='id' columnClassName='tr-id' dataFormat={formatCellId} >お客様番号</TableHeaderColumn>
             <TableHeaderColumn dataField='address' columnClassName='tr-address' dataFormat={formatCellLocation}> 住所</TableHeaderColumn>
             <TableHeaderColumn dataField='name' columnClassName='tr-name' >氏名</TableHeaderColumn>
@@ -78,9 +95,11 @@ const ListPage = ({currentAddress,showMapModal,toggleModal,isShowModal,changePos
      <div className='padding-space'>
        <Button bsStyle="primary"> ルート表示 </Button>
      </div>
-     <MapModal address={currentAddress} isOpen={isShowModal} toggleModal={toggleModal}/>
-     <Row>
-       {reports.length > 0 ? <MapElement address={reports[0].address} /> : <div></div>}
-     </Row>
+     {
+        // <MapModal address={currentAddress} isOpen={isShowModal} toggleModal={toggleModal}/>
+        // <Row>
+        //  {reports.length > 0 ? <MapElement address={reports[0].address} /> : <div></div>}
+        // </Row>
+      }
   </Page>)}
 export default ListPage

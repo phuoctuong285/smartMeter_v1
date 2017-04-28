@@ -1,11 +1,12 @@
 import React from 'react'
-import DetailPage from './DetailPage.react.js'
+import DetailPage from './DetailPage.jsx'
 import {connect} from 'react-redux'
 import autoBind from 'react-autobind'
 import * as ReportDetailActions from '../../api/reportDetailApi.js'
 import * as StatusHistoryActions from '../../api/statusHistoryApi.js'
 import * as FileListActions from '../../api/fileListApi.js'
 import {notification} from 'onsenui'
+import moment from 'moment'
 
 let id_tmp = '1111-012'
 
@@ -18,7 +19,8 @@ class DetailPageContainer extends React.Component {
 			noteValue:'',
 			testStatus:0,
 			file:'',
-			imagePreviewUrl:''
+			imagePreviewUrl:'',
+			testStatusHistory:{}
 		}
 	}
 	componentDidMount() {
@@ -48,6 +50,14 @@ class DetailPageContainer extends React.Component {
 			})
 		}
 
+		if(nextProps.statusHistory.method === 'GET') {
+			this.setState((prevState,props) => {
+				return {
+					testStatusHistory:nextProps.statusHistory
+				}
+			})
+		}
+
 		if(nextProps.reportDetail.method === 'PUT') {
 			getReportDetail(nextProps.ownProps.route.id)
 			getStatusHistory(nextProps.ownProps.route.id)
@@ -69,6 +79,7 @@ class DetailPageContainer extends React.Component {
 						testChangeActiveButton={this.testChangeActiveButton}
 						handleImageChange={this.handleImageChange}
 						handleImageSubmit={this.handleImageSubmit}
+						handleSubmit={this.handleSubmit}
 			/>
 		)
 	}
@@ -97,6 +108,41 @@ class DetailPageContainer extends React.Component {
 
 	handleImageSubmit(e) {
 		notification.alert(`Upload Successfully ${this.state.file}`)
+	}
+
+	handleSubmit(e) {
+		const {statusHistory,reportDetail} = this.props
+		const {testStatus} = this.state
+		notification.alert('Upload Successfully')
+
+		let tmp = Object.assign({},statusHistory)
+		let str = ''
+		switch(testStatus) {
+			case 0:
+				str='未着手'
+				break;
+			case 1:
+				str='PR配布'
+				break
+			case 2:
+				str='作業開始'
+				break
+			case 3:
+				str='作業完了'
+				break
+		}
+		let obj = {
+			id:tmp.response.length,
+			update_Date:moment().format('YYYY/MM/DD hh:mm:ss'),
+			update_Staff:reportDetail.response.length != 0 ? reportDetail.response[0].staff_Name : "No Name",
+			status_Name:str
+		}
+
+		tmp.response.push(obj)
+
+		this.setState({
+			testStatusHistory:tmp
+		})
 	}
 }
 
