@@ -20,7 +20,7 @@ const  renderToolbar = (navigator) => {
   }
   const RowButtons = ({users=[],dateValue,valueFilter,valueUsers,timeSearch,onChangeDate,onChangeFilter,onChangeUser}) => {
     return (
-      <Row>
+      <Row style={{height:'5%'}}>
         <DatePicker 
           selected={moment(dateValue,'YYYY-MM-DD')}
           onChange={onChangeDate}
@@ -53,9 +53,9 @@ const  renderToolbar = (navigator) => {
     const formatCellAction = (cell,row, enumObject, index) => {
 
     return (<Row>
-        <Button className='align-right'onClick={()=>{changePosition(index,index - 1)}}>
+        <Button className='align-right btn-sm'onClick={()=>{changePosition(index,index - 1)}}>
           <Glyphicon glyph="glyphicon glyphicon-arrow-up" /></Button>
-        <Button className='mdm' onClick={()=>{changePosition(index,index + 1)}}>
+        <Button className='mdm btn-sm' onClick={()=>{changePosition(index,index + 1)}}>
             <Glyphicon glyph="glyphicon glyphicon-arrow-down" />
           </Button>
       </Row>)
@@ -63,7 +63,7 @@ const  renderToolbar = (navigator) => {
 
     const renderShowsTotal = (start,to,total) => {
       return (
-          <span className='align-right'>表示件数変更</span>
+          <span className='align-right-10'>表示件数変更</span>
       )
     }
 
