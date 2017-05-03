@@ -16,6 +16,7 @@ class DetailPageContainer extends React.Component {
 		autoBind(this)
 		this.state = {
 			isLoading:true,
+			isPending:true,
 			noteValue:'',
 			testStatus:0,
 			file:'',
@@ -34,11 +35,13 @@ class DetailPageContainer extends React.Component {
 		if(!nextProps.reportDetail.isLoading && 
 			!nextProps.fileList.isLoading && !nextProps.statusHistory.isLoading) {
 			this.setState({
-				isLoading:false
+				isLoading:false,
+				isPending:false
 			})
 		} else {
 			this.setState({
-				isLoading:true
+				isLoading:true,
+				isPending:true
 			})
 		}
 	
@@ -73,13 +76,13 @@ class DetailPageContainer extends React.Component {
 	}
 
 	render() {
-		return (
+		return (	
 			<DetailPage {...this.props} {...this.state}
-						onChangeText={this.onChangeText}
-						testChangeActiveButton={this.testChangeActiveButton}
-						handleImageChange={this.handleImageChange}
-						handleImageSubmit={this.handleImageSubmit}
-						handleSubmit={this.handleSubmit}
+					onChangeText={this.onChangeText}
+					testChangeActiveButton={this.testChangeActiveButton}
+					handleImageChange={this.handleImageChange}
+					handleImageSubmit={this.handleImageSubmit}
+					handleSubmit={this.handleSubmit}
 			/>
 		)
 	}
@@ -111,10 +114,10 @@ class DetailPageContainer extends React.Component {
 	}
 
 	handleSubmit(e) {
+		e.preventDefault()
 		const {statusHistory,reportDetail} = this.props
 		const {testStatus} = this.state
-		notification.alert('Upload Successfully')
-
+		
 		let tmp = Object.assign({},statusHistory)
 		let str = ''
 		switch(testStatus) {
@@ -139,10 +142,15 @@ class DetailPageContainer extends React.Component {
 		}
 
 		tmp.response.push(obj)
-
+		
 		this.setState({
-			testStatusHistory:tmp
+			testStatusHistory:tmp,
+			isPending:true
 		})
+
+		setTimeout(() => this.setState({
+			isPending:false
+		}),2000)
 	}
 }
 

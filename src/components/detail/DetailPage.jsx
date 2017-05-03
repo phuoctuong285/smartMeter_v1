@@ -1,11 +1,12 @@
 import React from 'react'
 import moment from 'moment'
-import {Page,List,ListHeader,Toolbar,ListItem,BackButton,Input,AlertDialog,Row,Col,ProgressCircular} from 'react-onsenui'
+import {Page,List,ListHeader,Toolbar,ListItem,BackButton,Input,AlertDialog,Row,Col,ProgressCircular,Modal} from 'react-onsenui'
 import {notification} from 'onsenui'
 import {BootstrapTable,TableHeaderColumn} from 'react-bootstrap-table'
 import {Glyphicon,Button} from 'react-bootstrap'
 import LoginPageContainer from '../login/LoginPageContainer.react.js'
 import CustomCellEdit from '../element/CustomCellEdit.jsx'
+import CustomLoading from '../element/CustomLoading.jsx'
 
 const renderToolbar = (navigator) => (
 	<Toolbar className='toolbar-color'>
@@ -42,14 +43,17 @@ const DetailPage = ({
 	handleImageSubmit,
 
 	testStatusHistory={},
-	handleSubmit
+	handleSubmit,
+	isPending
 	}) => {
-	
 	if(isLoading) {
 		return (
-			<div className='center'>
-				<ProgressCircular indeterminate/>
-			</div>
+			<Page className='margin-navigator' renderToolbar={renderToolbar.bind(this,navigator)}
+					renderModal={() => (
+						<CustomLoading size={50} isLoading={true}/>
+					)}>
+				
+			</Page>
 		)
 	} else {
 		let status = reportDetail.response.length != 0 ? reportDetail.response[0].status_Id : 0
@@ -63,8 +67,12 @@ const DetailPage = ({
 		}
 		
 		return (
-			<Page className='margin-navigator' renderToolbar={renderToolbar.bind(this,navigator)}>
+			<Page className='margin-navigator' renderToolbar={renderToolbar.bind(this,navigator)}
+					renderModal={() => (
+						<CustomLoading size={50} isLoading={isPending}/>
+					)}>
 					<div className='detail-page'>
+					
 						<BootstrapTable tableHeaderClass='default-header-color' data={reportDetail.response} striped hover cellEdit={{mode:'click'}}>
 							<TableHeaderColumn dataField='key' isKey={true} hidden={true}>Id</TableHeaderColumn>
 							<TableHeaderColumn dataField='id' customEditor={{getElement:createSaveButton}}><Glyphicon glyph="glyphicon glyphicon-stop" />お客様番号 1</TableHeaderColumn>
@@ -72,21 +80,12 @@ const DetailPage = ({
 							<TableHeaderColumn dataField='name' customEditor={{getElement:createSaveButton}}><Glyphicon glyph="glyphicon glyphicon-stop" />氏名</TableHeaderColumn>
 						</BootstrapTable>
 
+						
 						<BootstrapTable tableHeaderClass='default-header-color' data={reportDetail.response} striped hover cellEdit={{mode:'click'}}>
 							<TableHeaderColumn dataField='key' isKey={true} hidden={true}>Id</TableHeaderColumn>
 							<TableHeaderColumn dataField='info' customEditor={{getElement:createSaveButton}}><Glyphicon glyph="glyphicon glyphicon-stop" />お客様番号 1</TableHeaderColumn>
 						</BootstrapTable>
-						{
-							// <div className='detail-page-description padding-space'>
-							// 	<div className='detail-page-description-title'>
-							// 		<Glyphicon glyph='glyphicon glyphicon-stop'/>機器情報
-							// 	</div>
-							// 	<div className='detail-page-description-textarea'>
-							// 		<textarea style={{width:'100%',height:'100px'}} placeholder='Type here' 
-							// 			value={info}/>
-							// 	</div>
-							// </div>
-						}
+			
 						<div className='detail-page-upload padding-space'>
 						 	<Row>
 						 		<Col width='50%'>
@@ -129,6 +128,7 @@ const DetailPage = ({
 								<Button bsStyle='primary' bsSize="large" onClick={() => notification.alert("Not Available")}>出力</Button>
 							</div>
 						</div>
+					
 					</div>
 			</Page>
 		)
