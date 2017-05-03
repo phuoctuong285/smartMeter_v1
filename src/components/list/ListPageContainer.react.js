@@ -7,7 +7,6 @@ import ListAPI from '../../api/listPageApi.js'
 import Moment from 'moment'
 import MapMaker from '../map/mapMaker.react.js'
 
-
 class ListPageContainer extends React.Component {
   constructor(props){
     super(props)
@@ -38,7 +37,7 @@ class ListPageContainer extends React.Component {
                             staff:this.state.valueUsers,
                             targetDate:this.changeDateFormat(Moment(value).format('YYYY-MM-DD'))})
     this.setState({
-      dateValue:Moment(value).format('YYYY-MM-DD')
+      dateValue:Moment(value).format('YYYY-MM-DD'), isShowMap:false
     })
   }
 
@@ -47,7 +46,7 @@ class ListPageContainer extends React.Component {
     this.props.LoadReport({filter:this.state.valueFilter,
                           staff:event.target.value,
                           targetDate:this.changeDateFormat(this.state.dateValue)})
-    this.setState({valueUsers:event.target.value})
+    this.setState({valueUsers:event.target.value,isShowMap:false})
   }
 
   onChangeFilter(event) {
@@ -55,7 +54,7 @@ class ListPageContainer extends React.Component {
     this.props.LoadReport({filter:event.target.value,
                           staff:this.state.valueUsers,
                           targetDate:this.changeDateFormat(this.state.dateValue)})
-    this.setState({valueFilter:event.target.value})
+    this.setState({valueFilter:event.target.value, isShowMap:false})
   }
   changePositionArray(indexA,indexB) {
     var arr = Object.assign([],this.state.reports)
