@@ -6,11 +6,6 @@ import autoBind from 'react-autobind'
 import {connect} from 'react-redux'
 import * as LoginAction from '../../api/loginApi.js'
 import {requestLogin} from '../../actions/loginAction.js'
-import MapDirection from '../map/MapDirections.react.js'
-
-const reports = [{address:'7 Phan Văn Hớn,Tân Thới Nhất, Quận 12, Hồ Chí Minh'},
-{address:'106 Trường Chinh, Tân Hưng Thuận, Quận 12, Hồ Chí Minh, Vietnam'},
-{address:'36 Tây Thạnh, Hồ Chí Minh, Việt Nam,Tây Thạnh,Tân Phú,Hồ Chí Minh , Vietnam'}]
 
 class LoginPageContainer extends React.Component {
 	constructor(props) {
@@ -59,13 +54,12 @@ class LoginPageContainer extends React.Component {
 
 	render() {
 		return (
-			// <LoginPage {...this.props}
-			// 	{...this.state}
-			// 	handleUserNameChange={this.handleUserNameChange}
-			// 	handlePasswordChange={this.handlePasswordChange}
-			// 	handleLogin={this.handleLogin}
-			// 	handleHideAlert={this.handleHideAlert}/>
-			<MapDirection Addresses={reports} />
+			<LoginPage {...this.props}
+				{...this.state}
+				handleUserNameChange={this.handleUserNameChange}
+				handlePasswordChange={this.handlePasswordChange}
+				handleLogin={this.handleLogin}
+				handleHideAlert={this.handleHideAlert}/>
 		)
 	}
 }

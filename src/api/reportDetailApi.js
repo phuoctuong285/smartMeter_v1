@@ -25,16 +25,16 @@ export const GetReportDetail = (id) => {
 
 export const PutReportDetail = (key,target,value) => {
 	let param = {
-		"Key":"MEMO",
-		"Value":"123",
-		"Target":[]
+		"Key":"STATUS",
+		"Value":"1",
+		"Target":["1111-012"]
 	}
 
 
 	return (dispatch) => {
 		dispatch(requestPutReportDetail(true))
 		return $.ajax({
-			url:`${apiUrl}/api/ReportDetails/`,
+			url:`http://localhost:9000/api/ReportDetails/`,
 			type:'PUT',
 			dataType:'json',
 			data:JSON.stringify(param),
@@ -43,15 +43,11 @@ export const PutReportDetail = (key,target,value) => {
 				withCredentials: true
 			},
 			crossDomain: true,
-			headers:{
-				"Access-Control-Request-Method":"PUT",
-				"Access-Control-Request-Headers":"Content-Type"
-			},
 			error:function() {
 				console.log("Error")
 			},
 			complete:function(data) {
-				console.log("Data")
+				console.log("Data",data)
 			}
 		})
 	}

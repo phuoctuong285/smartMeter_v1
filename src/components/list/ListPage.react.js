@@ -12,6 +12,10 @@ import CustomDatePicker from '../element/CustomDatePicker.jsx'
 import DatePicker from 'react-datepicker'
 import moment from 'moment'
 
+const reportsData = [{address:'7 Phan Văn Hớn,Tân Thới Nhất, Quận 12, Hồ Chí Minh'},
+{address:'106 Trường Chinh, Tân Hưng Thuận, Quận 12, Hồ Chí Minh, Vietnam'},
+{address:'36 Tây Thạnh, Hồ Chí Minh, Việt Nam,Tây Thạnh,Tân Phú,Hồ Chí Minh , Vietnam'}]
+
 const  renderToolbar = (navigator) => {
     return (
       <Toolbar className='toolbar-color'>
@@ -83,8 +87,9 @@ const  renderToolbar = (navigator) => {
     )
   }
 
+
 const ListPage = ({isShowMap,handleShowMap,currentAddress,showMapModal,toggleModal,isShowModal,changePosition,reports,dateValue,valueFilter,valueUsers,navigator,listUser,listReport,onChangeDate,onChangeFilter,onChangeUser}) => {
-  return (<Page className='back-ground-page' renderToolbar={renderToolbar.bind(this,navigator)}>
+  return (<Page className='back-ground-page margin-navigator' renderToolbar={renderToolbar.bind(this,navigator)}>
     <RowButtons users={listUser.users}
                 dateValue={dateValue}
                 valueFilter={valueFilter}
@@ -99,7 +104,7 @@ const ListPage = ({isShowMap,handleShowMap,currentAddress,showMapModal,toggleMod
        <MapModal address={currentAddress} isOpen={isShowModal} toggleModal={toggleModal}/>
 
          <Row>
-            {reports.length > 0 && isShowMap  ? <MapDirection Addresses={reports} /> : <div></div>}
+            {reports.length > 0 && isShowMap  ? <MapDirection Addresses={reportsData} /> : <div></div>}
          </Row>
 
   </Page>)}
