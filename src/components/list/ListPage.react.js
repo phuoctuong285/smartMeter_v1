@@ -20,7 +20,7 @@ const  renderToolbar = (navigator) => {
   }
   const RowButtons = ({users=[],dateValue,valueFilter,valueUsers,timeSearch,onChangeDate,onChangeFilter,onChangeUser}) => {
     return (
-      <Row style={{height:'5%'}}>
+      <Row >
         <DatePicker 
           selected={moment(dateValue,'YYYY-MM-DD')}
           onChange={onChangeDate}
@@ -83,7 +83,7 @@ const  renderToolbar = (navigator) => {
   }
 
 const ListPage = ({currentAddress,showMapModal,toggleModal,isShowModal,changePosition,reports,dateValue,valueFilter,valueUsers,navigator,listUser,listReport,onChangeDate,onChangeFilter,onChangeUser}) => {
-  return (<Page className='back-ground-page' renderToolbar={renderToolbar.bind(this,navigator)}>
+  return (<Page className='back-ground-page margin-navigator' renderToolbar={renderToolbar.bind(this,navigator)}>
     <RowButtons users={listUser.users}
                 dateValue={dateValue}
                 valueFilter={valueFilter}
