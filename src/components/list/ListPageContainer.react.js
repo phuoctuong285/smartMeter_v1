@@ -1,5 +1,6 @@
 import React from 'react'
 import {Page,List,ListHeader,Toolbar,ListItem,BackButton,Row,Col,Button,Input,AlertDialog} from 'react-onsenui'
+import {notification} from 'onsenui'
 import autoBind from 'react-autobind'
 import ListPage from './ListPage.react.js'
 import {connect} from 'react-redux'
@@ -78,7 +79,11 @@ class ListPageContainer extends React.Component {
       this.setState({isShowModal:true,currentAddress:address})
   }
   handleShowMap(){
-    this.setState({isShowMap:true})
+    if (this.props.listReport.reports.length < 9){
+        this.setState({isShowMap:true})
+    } else {
+        notification.alert({message:'maximun only 8'})
+    }
   }
   render() {
     return(

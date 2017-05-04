@@ -67,7 +67,7 @@ class MapDirection extends React.Component {
     return (
       <DirectionsGoogleMap
         containerElement={
-          <div className='center-block' style={{ height: `370px`,width:`600px` }} />
+          <div className='center-block' style={{ height: `370px`,width:`100%` }} />
         }
         mapElement={
           <div style={{ height: `100%`,width:`100%` }} />

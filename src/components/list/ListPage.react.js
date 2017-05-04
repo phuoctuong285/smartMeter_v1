@@ -104,7 +104,7 @@ const ListPage = ({isShowMap,handleShowMap,currentAddress,showMapModal,toggleMod
        <MapModal address={currentAddress} isOpen={isShowModal} toggleModal={toggleModal}/>
 
          <Row>
-            {reports.length > 0 && isShowMap  ? <MapDirection Addresses={reportsData} /> : <div></div>}
+            {reports.length > 0 && isShowMap  ? <MapDirection Addresses={reports} /> : <div></div>}
          </Row>
 
   </Page>)}
