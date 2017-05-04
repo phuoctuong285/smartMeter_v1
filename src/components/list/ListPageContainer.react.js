@@ -5,7 +5,7 @@ import ListPage from './ListPage.react.js'
 import {connect} from 'react-redux'
 import ListAPI from '../../api/listPageApi.js'
 import Moment from 'moment'
-
+import MapMaker from '../map/mapMaker.react.js'
 
 class ListPageContainer extends React.Component {
   constructor(props){
@@ -17,7 +17,8 @@ class ListPageContainer extends React.Component {
       valueUsers:window.localStorage.getItem('staff_Name'),
       reports:this.props.listReport.reports,
       isShowModal:false,
-      currentAddress:''
+      currentAddress:'',
+      isShowMap:false
 		}
   }
   componentWillUnmount(){
@@ -36,12 +37,8 @@ class ListPageContainer extends React.Component {
                             staff:this.state.valueUsers,
                             targetDate:this.changeDateFormat(Moment(value).format('YYYY-MM-DD'))})
     this.setState({
-      dateValue:Moment(value).format('YYYY-MM-DD')
+      dateValue:Moment(value).format('YYYY-MM-DD'), isShowMap:false
     })
-      // this.props.LoadReport({filter:this.state.valueFilter,
-      //                       staff:this.state.valueUsers,
-      //                       targetDate:this.changeDateFormat(event.target.value)})
-      // this.setState({dateValue:Moment(event.target.value).format('YYYY-MM-DD')})
   }
 
   onChangeUser(event) {
@@ -49,7 +46,7 @@ class ListPageContainer extends React.Component {
     this.props.LoadReport({filter:this.state.valueFilter,
                           staff:event.target.value,
                           targetDate:this.changeDateFormat(this.state.dateValue)})
-    this.setState({valueUsers:event.target.value})
+    this.setState({valueUsers:event.target.value,isShowMap:false})
   }
 
   onChangeFilter(event) {
@@ -57,7 +54,7 @@ class ListPageContainer extends React.Component {
     this.props.LoadReport({filter:event.target.value,
                           staff:this.state.valueUsers,
                           targetDate:this.changeDateFormat(this.state.dateValue)})
-    this.setState({valueFilter:event.target.value})
+    this.setState({valueFilter:event.target.value, isShowMap:false})
   }
   changePositionArray(indexA,indexB) {
     var arr = Object.assign([],this.state.reports)
@@ -80,6 +77,9 @@ class ListPageContainer extends React.Component {
   showMapModal(address) {
       this.setState({isShowModal:true,currentAddress:address})
   }
+  handleShowMap(){
+    this.setState({isShowMap:true})
+  }
   render() {
     return(
      <ListPage {...this.props}
@@ -90,7 +90,8 @@ class ListPageContainer extends React.Component {
        onChangeDate={this.onChangeDate}
        onChangeFilter={this.onChangeFilter}
        onChangeUser={this.onChangeUser}
-       navigator={this.props.navigator}/>
+       navigator={this.props.navigator}
+       handleShowMap={this.handleShowMap}/>
     )
   }
 }

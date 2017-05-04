@@ -7,10 +7,15 @@ import $ from 'jquery'
 import DetailPageContainer from '../detail/DetailPageContainer.jsx'
 import LoginPageContainer from '../login/LoginPageContainer.react.js'
 import MapModal from '../mapModal.react.js'
-import MapElement from '../mapElement.react.js'
+import MapDirection from '../map/MapDirections.react.js'
 import CustomDatePicker from '../element/CustomDatePicker.jsx'
 import DatePicker from 'react-datepicker'
 import moment from 'moment'
+
+const reportsData = [{address:'7 Phan Văn Hớn,Tân Thới Nhất, Quận 12, Hồ Chí Minh'},
+{address:'106 Trường Chinh, Tân Hưng Thuận, Quận 12, Hồ Chí Minh, Vietnam'},
+{address:'36 Tây Thạnh, Hồ Chí Minh, Việt Nam,Tây Thạnh,Tân Phú,Hồ Chí Minh , Vietnam'}]
+
 const  renderToolbar = (navigator) => {
     return (
       <Toolbar className='toolbar-color'>
@@ -20,8 +25,8 @@ const  renderToolbar = (navigator) => {
   }
   const RowButtons = ({users=[],dateValue,valueFilter,valueUsers,timeSearch,onChangeDate,onChangeFilter,onChangeUser}) => {
     return (
-      <Row >
-        <DatePicker 
+      <Row style={{height:'5%'}}>
+        <DatePicker
           selected={moment(dateValue,'YYYY-MM-DD')}
           onChange={onChangeDate}
           dateFormat='YYYY-MM-DD'
@@ -82,7 +87,8 @@ const  renderToolbar = (navigator) => {
     )
   }
 
-const ListPage = ({currentAddress,showMapModal,toggleModal,isShowModal,changePosition,reports,dateValue,valueFilter,valueUsers,navigator,listUser,listReport,onChangeDate,onChangeFilter,onChangeUser}) => {
+
+const ListPage = ({isShowMap,handleShowMap,currentAddress,showMapModal,toggleModal,isShowModal,changePosition,reports,dateValue,valueFilter,valueUsers,navigator,listUser,listReport,onChangeDate,onChangeFilter,onChangeUser}) => {
   return (<Page className='back-ground-page margin-navigator' renderToolbar={renderToolbar.bind(this,navigator)}>
     <RowButtons users={listUser.users}
                 dateValue={dateValue}
@@ -93,13 +99,13 @@ const ListPage = ({currentAddress,showMapModal,toggleModal,isShowModal,changePos
                 onChangeUser={onChangeUser}   />
               {listUser.isLoading || listReport.isLoading ? <ProgressCircular className='center-block' indeterminate /> : <TableList data1={reports} showMapModal={showMapModal} changePosition={changePosition} navigator={navigator}/>}
      <div className='padding-space'>
-       <Button bsStyle="primary"> ルート表示 </Button>
+       <Button bsStyle="primary" onClick={() => handleShowMap()}> ルート表示 </Button>
      </div>
-     {
-        // <MapModal address={currentAddress} isOpen={isShowModal} toggleModal={toggleModal}/>
-        // <Row>
-        //  {reports.length > 0 ? <MapElement address={reports[0].address} /> : <div></div>}
-        // </Row>
-      }
+       <MapModal address={currentAddress} isOpen={isShowModal} toggleModal={toggleModal}/>
+
+         <Row>
+            {reports.length > 0 && isShowMap  ? <MapDirection Addresses={reportsData} /> : <div></div>}
+         </Row>
+
   </Page>)}
 export default ListPage

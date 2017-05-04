@@ -18,6 +18,7 @@
     "react-cookie": "^2.0.6",
     "react-datepicker": "^0.46.0",
     "react-dom": "15.4.2",
+    "react-google-maps": "^6.3.0",
     "react-onsenui": "1.2.x",
     "react-redux": "^5.0.4",
     "react-thunk": "^1.0.0",
