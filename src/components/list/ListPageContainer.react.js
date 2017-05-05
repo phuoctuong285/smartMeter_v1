@@ -92,7 +92,7 @@ class ListPageContainer extends React.Component {
     if(tmp.length < 9) {
         this.setState({isShowMap:true,isHide:false,reports:tmp})
     } else {
-        notification.alert({message:'maximun only 8'})
+        notification.alert({message:'最大８件まで利用可能です。'})
     }
   }
   handleSizePerPageListChange(sizePerPageChange) {

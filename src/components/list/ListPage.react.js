@@ -19,7 +19,7 @@ const reportsData = [{address:'7 Phan Văn Hớn,Tân Thới Nhất, Quận 12, 
 const  renderToolbar = (navigator) => {
     return (
       <Toolbar className='toolbar-color'>
-          <div className="text-color center">List Page</div>
+         <div className="text-color center">作業報告</div>
           <div className='right'><a className='padding-space' onClick={() => navigator.replacePage({component:LoginPageContainer})}><span className='text-color'>ログアウト</span></a></div>
       </Toolbar>
     );
@@ -30,6 +30,7 @@ const  renderToolbar = (navigator) => {
         <DatePicker
           selected={moment(dateValue,'YYYY-MM-DD')}
           onChange={onChangeDate}
+          locale="jp"
           dateFormat='YYYY-MM-DD'
           className='custom-date-picker'
         />

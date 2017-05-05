@@ -4,7 +4,7 @@ import {notification} from 'onsenui'
 
 const renderToolbar = (title,navigator) => (
 	<Toolbar className='toolbar-color'>
-		<div className='text-color center'>{title}</div>
+		<div className='text-color center'>ログイン</div>
 	</Toolbar>
 )
 
@@ -41,9 +41,9 @@ const LoginPage = ({
        			<b>ログイン</b>
        		</div>
        		<div className='login-form-input'>
-	       		<input type='text' className='text-input--underbar' placeholder='Username' value={username} onChange={handleUserNameChange}/>
+	       		<input type='text' className='text-input--underbar' placeholder='ユーザー名' value={username} onChange={handleUserNameChange}/>
 	       		<div className='separate'/>
-	       		<input type='password' className='text-input--underbar' placeholder='Password' value={password} onChange={handlePasswordChange}/>
+	       		<input type='password' className='text-input--underbar' placeholder='パスワード' value={password} onChange={handlePasswordChange}/>
 	       	</div>
        		<div className='login-form-button'>
        			<button onClick={handleLogin} className='login-button' disabled={isLoading}>
