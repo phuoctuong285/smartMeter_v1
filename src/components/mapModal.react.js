@@ -21,13 +21,13 @@ class mapModal extends React.Component {
     return (
     <Modal show={isOpen} onHide={() => toggleModal(false)}>
        <Modal.Header closeButton >
-          <Modal.Title>Map</Modal.Title>
+          <Modal.Title>地図表示</Modal.Title>
        </Modal.Header>
        <Modal.Body>
          <MapMaker address={address}  />
        </Modal.Body>
        <Modal.Footer>
-         <Button onClick={() => toggleModal(false)}>Close</Button>
+         <Button onClick={() => toggleModal(false)}>閉じる</Button>
        </Modal.Footer>
      </Modal>
     )

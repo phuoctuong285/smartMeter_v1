@@ -4,7 +4,7 @@ import {notification} from 'onsenui'
 
 const renderToolbar = (title,navigator) => (
 	<Toolbar className='toolbar-color'>
-		<div className='text-color center'>{title}</div>
+		<div className='text-color center'>ログイン</div>
 	</Toolbar>
 )
 

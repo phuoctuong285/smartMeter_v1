@@ -54,7 +54,7 @@ class MapDirection extends React.Component {
            directions: result,
          });
        } else {
-         notification.alert({message:`error fetching directions ${result}`})
+         notification.alert({message:`場所が確認出来ません。 ${result}`})
        }
  })
   }

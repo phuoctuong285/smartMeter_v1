@@ -82,7 +82,7 @@ class ListPageContainer extends React.Component {
     if (this.props.listReport.reports.length < 9){
         this.setState({isShowMap:true})
     } else {
-        notification.alert({message:'maximun only 8'})
+        notification.alert({message:'最大８件まで利用可能です。'})
     }
   }
   render() {
