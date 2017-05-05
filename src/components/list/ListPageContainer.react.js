@@ -8,6 +8,7 @@ import ListAPI from '../../api/listPageApi.js'
 import Moment from 'moment'
 import MapMaker from '../map/mapMaker.react.js'
 
+
 class ListPageContainer extends React.Component {
   constructor(props){
     super(props)
@@ -17,16 +18,19 @@ class ListPageContainer extends React.Component {
 			valueFilter:'',
       valueUsers:window.localStorage.getItem('staff_Name'),
       reports:this.props.listReport.reports,
+      reportsTmp:[],//for direction map
       isShowModal:false,
       currentAddress:'',
-      isShowMap:false
+      isShowMap:false,
+      isHide:false,
+      sizePerPage:4
 		}
   }
   componentWillUnmount(){
-    console.log('Unmount')
+  
   }
   componentDidMount() {
-     console.log('LoadInit')
+    
      this.props.LoadStaff()
      this.props.LoadReport({filter:this.state.valueFilter,
                           staff:this.state.valueUsers,
@@ -43,7 +47,7 @@ class ListPageContainer extends React.Component {
   }
 
   onChangeUser(event) {
-    console.log('LoadChangeUser')
+  
     this.props.LoadReport({filter:this.state.valueFilter,
                           staff:event.target.value,
                           targetDate:this.changeDateFormat(this.state.dateValue)})
@@ -51,7 +55,7 @@ class ListPageContainer extends React.Component {
   }
 
   onChangeFilter(event) {
-    console.log('LoadChangeFilter')
+   
     this.props.LoadReport({filter:event.target.value,
                           staff:this.state.valueUsers,
                           targetDate:this.changeDateFormat(this.state.dateValue)})
@@ -79,11 +83,33 @@ class ListPageContainer extends React.Component {
       this.setState({isShowModal:true,currentAddress:address})
   }
   handleShowMap(){
-    if (this.props.listReport.reports.length < 9){
-        this.setState({isShowMap:true})
+    // if (this.props.listReport.reports.length < 9){
+    //     this.setState({isShowMap:true,isHide:false})
+    // } else {
+    //     notification.alert({message:'maximun only 8'})
+    // }
+    let tmp = this.state.reports.slice(0,this.state.sizePerPage)
+    if(tmp.length < 9) {
+        this.setState({isShowMap:true,isHide:false,reports:tmp})
     } else {
         notification.alert({message:'maximun only 8'})
     }
+  }
+  handleSizePerPageListChange(sizePerPageChange) {
+      let reportTmp = this.props.listReport.reports.slice(0,sizePerPageChange)
+      this.setState({
+        reports:reportTmp,
+        isShowMap:false,
+        isHide:false,
+        sizePerPage:sizePerPageChange
+      })
+  }
+  handleHideMap() {
+    this.setState((prevState,props) => {
+      return {
+        isHide:!prevState.isHide
+      }
+    })
   }
   render() {
     return(
@@ -96,7 +122,9 @@ class ListPageContainer extends React.Component {
        onChangeFilter={this.onChangeFilter}
        onChangeUser={this.onChangeUser}
        navigator={this.props.navigator}
-       handleShowMap={this.handleShowMap}/>
+       handleShowMap={this.handleShowMap}
+       handleSizePerPageListChange={this.handleSizePerPageListChange}
+       handleHideMap={this.handleHideMap}/>
     )
   }
 }
