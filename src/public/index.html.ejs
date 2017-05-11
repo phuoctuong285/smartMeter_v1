@@ -9,7 +9,7 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   <!-- The following EJS lines include the necessary CSS and JS
   from Monaca (cordova.js/ loader.js) in production mode -->
-
+  <script type="text/javascript" src="cordova.js"></script>
 <% for (var dep in htmlWebpackPlugin.options.externalJS) { %>
   <script type="text/javascript" src="<%= htmlWebpackPlugin.options.externalJS[dep] %>"></script><% } %>
 <% for (var dep in htmlWebpackPlugin.options.externalCSS) { %>

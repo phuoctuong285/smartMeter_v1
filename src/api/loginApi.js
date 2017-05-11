@@ -29,6 +29,9 @@ export const Login = (user) => {
 								))
 							},
 							error:function(xhr,status,error){
+								console.log(xhr)
+								console.log(status)
+								console.log(error)
 								dispatch(loginError({
 									message:error
 								}))
