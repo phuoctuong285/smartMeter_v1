@@ -7,8 +7,7 @@ import * as StatusHistoryActions from '../../api/statusHistoryApi.js'
 import * as FileListActions from '../../api/fileListApi.js'
 import {notification} from 'onsenui'
 import moment from 'moment'
-
-let id_tmp = '1111-012'
+import LoginPageContainer from '../login/LoginPageContainer.react.js'
 
 class DetailPageContainer extends React.Component {
 	constructor(props) {
@@ -17,60 +16,49 @@ class DetailPageContainer extends React.Component {
 		this.state = {
 			isLoading:true,
 			isPending:true,
-			noteValue:'',
-			testStatus:0,
+			memo:'',
 			file:'',
-			imagePreviewUrl:'',
-			testStatusHistory:{}
+			imagePreviewUrl:''
 		}
 	}
 	componentDidMount() {
 		const {getReportDetail,getFileList,getStatusHistory,route} = this.props
 		getReportDetail(route.id)
-		getFileList(route.id)
-		getStatusHistory(route.id)
+		// getFileList(route.id)
+		 getStatusHistory(route.id)
 	}
 	
 	componentWillReceiveProps(nextProps) {
-		if(!nextProps.reportDetail.isLoading && 
-			!nextProps.fileList.isLoading && !nextProps.statusHistory.isLoading) {
-			this.setState({
-				isLoading:false,
-				isPending:false
-			})
+		const {getReportDetail,getStatusHistory} = this.props
+
+		if(nextProps.reportDetail.error || nextProps.fileList.error 
+				|| nextProps.statusHistory.error) {
+			notification.alert(`Refresh Token Expired Time`)
+			this.props.navigator.replacePage({component:LoginPageContainer})
 		} else {
-			this.setState({
-				isLoading:true,
-				isPending:true
-			})
-		}
-	
-		if(nextProps.reportDetail.method === 'GET') {
-			this.setState((prevState,props) => {
-				return {
-					testStatus:nextProps.reportDetail.response[0].status_Id
-				}
-			})
-		}
-
-		if(nextProps.statusHistory.method === 'GET') {
-			this.setState((prevState,props) => {
-				return {
-					testStatusHistory:nextProps.statusHistory
-				}
-			})
-		}
-
-		if(nextProps.reportDetail.method === 'PUT') {
-			getReportDetail(nextProps.ownProps.route.id)
-			getStatusHistory(nextProps.ownProps.route.id)
+			if(!nextProps.reportDetail.isLoading && 
+				!nextProps.fileList.isLoading && !nextProps.statusHistory.isLoading) {
+				this.setState({
+					isLoading:false,
+					isPending:false
+				})
+			} else {
+				this.setState({
+					isLoading:true,
+					isPending:true
+				})
+			}
+			if(nextProps.reportDetail.method === 'PUT') {
+				getReportDetail(nextProps.ownProps.route.id)
+				getStatusHistory(nextProps.ownProps.route.id)
+			}
 		}
 	}
 
 	onChangeText(type,e) {
 		if(type == 'note') {
 			this.setState({
-				noteValue:e.target.value
+				memo:e.target.value
 			})
 		}
 	}
@@ -79,7 +67,7 @@ class DetailPageContainer extends React.Component {
 		return (	
 			<DetailPage {...this.props} {...this.state}
 					onChangeText={this.onChangeText}
-					testChangeActiveButton={this.testChangeActiveButton}
+					changeActiveButton={this.changeActiveButton}
 					handleImageChange={this.handleImageChange}
 					handleImageSubmit={this.handleImageSubmit}
 					handleSubmit={this.handleSubmit}
@@ -87,9 +75,11 @@ class DetailPageContainer extends React.Component {
 		)
 	}
 
-	testChangeActiveButton(status) {
+	changeActiveButton(status) {
+		const {putReportDetail,route} = this.props
+		putReportDetail("STATUS",[route.id],status)
 		this.setState({
-			testStatus:status
+			isPending:true
 		})
 	}
 
@@ -114,43 +104,12 @@ class DetailPageContainer extends React.Component {
 	}
 
 	handleSubmit(e) {
-		e.preventDefault()
-		const {statusHistory,reportDetail} = this.props
-		const {testStatus} = this.state
-		
-		let tmp = Object.assign({},statusHistory)
-		let str = ''
-		switch(testStatus) {
-			case 0:
-				str='未着手'
-				break;
-			case 1:
-				str='PR配布'
-				break
-			case 2:
-				str='作業開始'
-				break
-			case 3:
-				str='作業完了'
-				break
-		}
-		let obj = {
-			id:tmp.response.length,
-			update_Date:moment().format('YYYY/MM/DD hh:mm:ss'),
-			update_Staff:reportDetail.response.length != 0 ? reportDetail.response[0].staff_Name : "No Name",
-			status_Name:str
-		}
-
-		tmp.response.push(obj)
-		
+		const {putReportDetail,route} = this.props
+		const {memo} = this.state
+		putReportDetail("MEMO",[route.id],memo)
 		this.setState({
-			testStatusHistory:tmp,
 			isPending:true
 		})
-
-		setTimeout(() => this.setState({
-			isPending:false
-		}),2000)
 	}
 }
 

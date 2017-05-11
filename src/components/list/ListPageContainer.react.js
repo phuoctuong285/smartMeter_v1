@@ -6,8 +6,8 @@ import ListPage from './ListPage.react.js'
 import {connect} from 'react-redux'
 import ListAPI from '../../api/listPageApi.js'
 import Moment from 'moment'
-import MapMaker from '../map/mapMaker.react.js'
-
+import MapMaker from '../element/map/mapMaker.react.js'
+import LoginPageContainer from '../login/LoginPageContainer.react.js'
 
 class ListPageContainer extends React.Component {
   constructor(props){
@@ -61,6 +61,7 @@ class ListPageContainer extends React.Component {
                           targetDate:this.changeDateFormat(this.state.dateValue)})
     this.setState({valueFilter:event.target.value, isShowMap:false})
   }
+
   changePositionArray(indexA,indexB) {
     var arr = Object.assign([],this.state.reports)
     if (indexA >= 0 && indexB >= 0) {
@@ -70,31 +71,43 @@ class ListPageContainer extends React.Component {
     }
     this.setState({reports:arr})
   }
+
   changeDateFormat(date) {
     return Moment(date).format('YYYY/MM/DD')
   }
+
   componentWillReceiveProps(nextProps){
-    this.setState({reports:nextProps.listReport.reports})
+    if(nextProps.listReport.error) {
+      notification.alert(`Refresh Token Expired Time`)
+      this.props.navigator.replacePage({component:LoginPageContainer})
+    }else {
+       this.setState({reports:nextProps.listReport.reports.slice(0,this.state.sizePerPage)})
+    }
   }
+
   toggleModal(value) {
     this.setState({isShowModal:value})
   }
+
   showMapModal(address) {
       this.setState({isShowModal:true,currentAddress:address})
   }
+
   handleShowMap(){
     // if (this.props.listReport.reports.length < 9){
     //     this.setState({isShowMap:true,isHide:false})
     // } else {
     //     notification.alert({message:'maximun only 8'})
     // }
-    let tmp = this.state.reports.slice(0,this.state.sizePerPage)
+    //let tmp = this.state.reports.slice(0,this.state.sizePerPage)
+    let tmp = this.state.reports
     if(tmp.length < 9) {
         this.setState({isShowMap:true,isHide:false,reports:tmp})
     } else {
         notification.alert({message:'最大８件まで利用可能です。'})
     }
   }
+
   handleSizePerPageListChange(sizePerPageChange) {
       let reportTmp = this.props.listReport.reports.slice(0,sizePerPageChange)
       this.setState({
@@ -104,6 +117,7 @@ class ListPageContainer extends React.Component {
         sizePerPage:sizePerPageChange
       })
   }
+
   handleHideMap() {
     this.setState((prevState,props) => {
       return {
@@ -111,6 +125,7 @@ class ListPageContainer extends React.Component {
       }
     })
   }
+
   render() {
     return(
      <ListPage {...this.props}

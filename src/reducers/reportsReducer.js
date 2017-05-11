@@ -20,7 +20,7 @@ const reportsReducer = (state=initState,action) => {
 			case appConstant.LOAD_REPORTS_ERROR:
 				return {
 					...state,
-					isLoading:action.isLoading,
+					isLoading:false,
 					error:true,
 					message:action.error || 'Something went wrong'
 				}

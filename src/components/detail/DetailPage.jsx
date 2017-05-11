@@ -7,6 +7,7 @@ import {Glyphicon,Button} from 'react-bootstrap'
 import LoginPageContainer from '../login/LoginPageContainer.react.js'
 import CustomCellEdit from '../element/CustomCellEdit.jsx'
 import CustomLoading from '../element/CustomLoading.jsx'
+import CustomCarousel from '../element/CustomCarousel.jsx'
 
 const renderToolbar = (navigator) => (
 	<Toolbar className='toolbar-color'>
@@ -24,25 +25,29 @@ const createSaveButton = (onUpdate,props) => (
 	<CustomCellEdit onUpdate={onUpdate} {...props}/>
 )
 
+let images = [
+	'https://sv.1phut.mobi/uploads/2016/04/5.jpg',
+	'http://i.9mobi.vn/cf/images/2015/04/nkk/hinh-avatar-dep-15.jpg',
+	'http://chuyengame.com/images/news/bo-anh-avatar-facebook-phong-cach-lmht-chibi-1468990245.jpg'
+]
+
 const DetailPage = ({
 	route,
 	navigator,
 	isLoading,
 	id,
-	noteValue,
+	memo,
 	reportDetail={},
 	fileList={},
 	statusHistory={},
 	putReportDetail,
 	onChangeText,
 
-	testStatus,
-	testChangeActiveButton,
+	changeActiveButton,
 	imagePreviewUrl,
 	handleImageChange,
 	handleImageSubmit,
 
-	testStatusHistory={},
 	handleSubmit,
 	isPending
 	}) => {
@@ -90,10 +95,18 @@ const DetailPage = ({
 						 	<Row>
 						 		<Col width='50%'>
 									<div>
-										<Button bsStyle={testStatus == 0 ? 'success' : 'default'} className='align-right' onClick={() => testChangeActiveButton(0)}>未着手</Button>
-										<Button bsStyle={testStatus == 1 ? 'success' : 'default'} className='align-right' onClick={() => testChangeActiveButton(1)}>PR配布</Button>
-										<Button bsStyle={testStatus == 2 ? 'success' : 'default'} className='align-right' onClick={() => testChangeActiveButton(2)}>作業開始</Button>
-										<Button bsStyle={testStatus == 3 ? 'success' : 'default'} className='align-right' onClick={() => testChangeActiveButton(3)}>作業完了</Button>
+										<Button bsStyle={status == '0' ? 'success' : 'default'} className='align-right' onClick={() => changeActiveButton('0')}>未着手</Button>
+										<Button bsStyle={status == '1' ? 'success' : 'default'} className='align-right' onClick={() => changeActiveButton('1')}>PR配布</Button>
+										<Button bsStyle={status == '2' ? 'success' : 'default'} className='align-right' onClick={() => changeActiveButton('2')}>作業開始</Button>
+										<Button bsStyle={status == '3' ? 'success' : 'default'} className='align-right' 
+												onClick={ () => {
+													if(fileList.response.length < 2) {
+														notification.alert(`作業完了する場合には、写真を2枚以上アップロードしてください。`)
+													} else {
+														changeActiveButton('3')
+													}}
+												}>作業完了
+										</Button>
 									</div>
 									<div className='top-space-bottom'/>
 									<div>
@@ -110,14 +123,21 @@ const DetailPage = ({
 							</Row>
 						</div>
 						<div className='detail-page-note padding-space'>
-							<textarea style={{width:'100%',height:'100px'}} placeholder='特記事項があればここに記入' onChange={onChangeText.bind(this,'note')}/>	
+							<textarea style={{width:'100%',height:'100px'}} placeholder='特記事項があればここに記入' onChange={onChangeText.bind(this,'note')} value={memo}/>	
 							<div className='detail-page-submit'>
 								<Button bsStyle='primary' bsSize="large" onClick={(e) => handleSubmit(e)}>更新</Button>	
 							</div>
 						</div>
 						
+						{
+							images && <div className='detail-page-carousel'>
+										<CustomCarousel images={images}/>
+									</div> 
+						}
+						
+
 						<div className='detail-page-history padding-space'>
-							<BootstrapTable tableHeaderClass='default-header-color' data={testStatusHistory.response} striped hover>
+							<BootstrapTable tableHeaderClass='default-header-color' data={statusHistory.response} striped hover>
 								<TableHeaderColumn row='0' colSpan='3'><Glyphicon glyph="glyphicon glyphicon-stop" />ステータス更新職歴</TableHeaderColumn>
 								<TableHeaderColumn dataField='id' isKey={true} hidden={true}>Id</TableHeaderColumn>
 								<TableHeaderColumn row='1' dataField='update_Date' dataFormat={dateFormatter}>更新日時</TableHeaderColumn>

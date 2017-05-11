@@ -32,5 +32,5 @@ export const loadReportsSuccess = (data) => ({
 
 export const loadReportsError = (error) => ({
     type:appConstant.LOAD_REPORTS_ERROR,
-    data:error
+    error:error
 })

@@ -6,11 +6,12 @@ import {Glyphicon,Button,DropdownButton} from 'react-bootstrap'
 import $ from 'jquery'
 import DetailPageContainer from '../detail/DetailPageContainer.jsx'
 import LoginPageContainer from '../login/LoginPageContainer.react.js'
-import MapModal from '../mapModal.react.js'
-import MapDirection from '../map/MapDirections.react.js'
+import MapModal from '../element/mapModal.react.js'
+import MapDirection from '../element/map/MapDirections.react.js'
 import CustomDatePicker from '../element/CustomDatePicker.jsx'
 import DatePicker from 'react-datepicker'
 import moment from 'moment'
+import Storage from '../../helpers/storage.js'
 
 const reportsData = [{address:'7 Phan Văn Hớn,Tân Thới Nhất, Quận 12, Hồ Chí Minh'},
 {address:'106 Trường Chinh, Tân Hưng Thuận, Quận 12, Hồ Chí Minh, Vietnam'},
@@ -20,7 +21,12 @@ const  renderToolbar = (navigator) => {
     return (
       <Toolbar className='toolbar-color'>
          <div className="text-color center">作業報告</div>
-          <div className='right'><a className='padding-space' onClick={() => navigator.replacePage({component:LoginPageContainer})}><span className='text-color'>ログアウト</span></a></div>
+          <div className='right'><a className='padding-space' id='logout'
+                onClick={() => {
+                    Storage.removeAll()
+                    navigator.replacePage({component:LoginPageContainer})
+                  }}>
+                  <span className='text-color'>ログアウト</span></a></div>
       </Toolbar>
     );
   }

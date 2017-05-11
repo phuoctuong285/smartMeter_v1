@@ -1,0 +1,19 @@
+.custom-carousel {
+	position: relative;
+	.left-carousel-control {
+		position: absolute;
+		top:40%;
+		left:0;
+		font-size: 300%
+	}
+	.right-carousel-control {
+		top:40%;
+		position:absolute;
+		right:0;
+		font-size: 300%
+	}
+	.dot-carousel-control {
+		text-align: center;
+		font-size: 20px;
+	}
+}

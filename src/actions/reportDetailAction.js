@@ -38,6 +38,6 @@ export const putReportDetailSuccess = (data) => {
 export const putReportDetailError = (error) => {
 	return {
 		type:appConstants.PUT_REPORT_DETAIL_ERROR,
-		erorr:error
+		error:error
 	}
 }
